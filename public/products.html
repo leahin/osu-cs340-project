@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>ABC DB Products</title>
+  </head>
+  <body>
+    <!-- menubar -->
+    <div class="menubar">
+      <li><a href="index.html">Home</a>
+      <li><a href="stores.html">Stores</a>
+      <li><a href="products.html">Products</a>
+      <li><a href="clients.html">Clients</a>
+      <li><a href="orders.html">Orders</a>
+    </div>
+
+    <!-- create data -->
+    <fieldset>
+      <form method="post" id="pform">
+        <label for="pname">Product Name:</label>
+        <input type="text" id="pname" name="pname">
+        <label for="pprice">Product Price:</label>
+        <input type="text" id="pprice" name="pprice">
+        <input type="submit" id="psubmit">
+      </form>
+   </fieldset>
+
+    <!-- read/update/delete data -->
+    <table id="producttable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Type</th>
+          <th></th>  <!-- Update id = "pupdate" + "id"-->
+          <th></th>  <!-- Delete id = "pdelete" + "id"-->
+        </tr>
+      </thead>
+      <tbody id="producttbody">
+        <!-- Examples -->
+        <tr>
+          <th>5</th>
+          <th>Product 5</th>
+          <th>49.99</th>
+          <th>Type 3</th>
+          <th><form class="pupdate" id="pupdate5">
+              <button type="submit" form="pupdate5" value="Update">Update</button>
+              </form></th>
+          <th><form class="pdelete" id="pdelete5">
+              <button type="submit" form="pdelete5" value="Delete">Delete</button>
+              </form></th>
+        </tr>
+        <tr>
+          <th>4</th>
+          <th>Product 4</th>
+          <th>39.99</th>
+          <th>Type 2</th>
+          <th><form class="pupdate" id="pupdate4">
+              <button type="submit" form="pupdate4" value="Update">Update</button>
+              </form></th>
+          <th><form class="pdelete" id="pdelete4">
+              <button type="submit" form="pdelete4" value="Delete">Delete</button>
+              </form></th>
+        </tr>
+        <tr>
+          <th>3</th>
+          <th>Product 3</th>
+          <th>39.99</th>
+          <th>Type 3</th>
+          <th><form class="pupdate" id="pupdate3">
+              <button type="submit" form="pupdate3" value="Update">Update</button>
+              </form></th>
+          <th><form class="pdelete" id="pdelete3">
+              <button type="submit" form="pdelete3" value="Delete">Delete</button>
+              </form></th>
+        </tr>
+        <tr>
+          <th>2</th>
+          <th>Product 2</th>
+          <th>59.99</th>
+          <th>Type 2</th>
+          <th><form class="pupdate" id="pupdate2">
+              <button type="submit" form="pupdate2" value="Update">Update</button>
+              </form></th>
+          <th><form class="pdelete" id="pdelete2">
+              <button type="submit" form="pdelete2" value="Delete">Delete</button>
+              </form></th>
+        </tr>
+        <tr>
+          <th>1</th>
+          <th>Product 1</th>
+          <th>49.99</th>
+          <th>Type 1</th>
+          <th><form class="pupdate" id="pupdate1">
+              <button type="submit" form="pupdate1" value="Update">Update</button>
+              </form></th>
+          <th><form class="pdelete" id="pdelete1">
+              <button type="submit" form="pdelete1" value="Delete">Delete</button>
+              </form></th>
+        </tr>
+        <!-- End of Examples -->
+      </tbody>
+    </table>
+    <!-- script files -->
+    <script src="scripts.js"></script>
+  </body>
+</html>

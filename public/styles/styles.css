@@ -1,0 +1,53 @@
+
+/* Home: message body */
+.mbody {
+  margin: 100px;
+}
+
+/* Entity page body */
+.pbody {
+  margin-top: 100px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+/* Table: Search & Filter */
+.search {
+  margin-bottom: 15px;
+  float: right;
+}
+
+/* Add form */
+.add {
+  margin-bottom: 30px;
+  padding: 15px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: grey;
+}
+
+/* Table: Text*/
+tr {
+  text-align: center;
+}
+
+/* Table: Update & Delete Buttons */
+tbody > button {
+  display: block;
+  margin: 0 auto;
+}
+
+tbody > input {
+  display: block;
+  margin: 0 auto;
+}
+
+button {
+
+}
+
+/* new Window contents*/
+.newWindow {
+  margin: 40px;
+}

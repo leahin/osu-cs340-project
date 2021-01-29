@@ -2,22 +2,136 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>ABC DB Customers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css" />
+    <title>Customers | ABC DB</title>
   </head>
   <body>
-    <!-- menubar -->
-    <div class="menubar">
-      <li><a href="index.html">Home</a>
-      <li><a href="stores.html">Stores</a>
-      <li><a href="products.html">Products</a>
-      <li><a href="customers.html">Customers</a>
-      <li><a href="orders.html">Orders</a>
+    <!-- Bootstrap NavBar -->
+    <div class="fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="index.html">ABC DB</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="stores.html">Stores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="products.html">Products</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-item nav-link active" href="customers.html">Customers <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="orders.html">Orders</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Reports
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="sales_report.html">Sales</a>
+                  <a class="dropdown-item" href="stores_products.html">Stores and Products</a>
+                  <a class="dropdown-item" href="customers_products.html">Customers and Products</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+    <div class="pbody">
+
+      <!-- Add Data -->
+      <div class="add">
+        <fieldset>
+          <legend>Add Customer</legend>
+          <form method="post" class="addForm">
+            <input type="text" id="customerFName" placeholder="First Name">
+            <input type="text" id="customerLName" placeholder="Last Name">
+            <input type="text" id="customerBday" placeholder="Birthday">
+            <input type="text" id="customerRday" placeholder="Registered Date">
+            <input type="submit" id="addCustomerSubmit" value="Submit">
+          </form>
+        </fieldset>
+      </div>
+
+      <!-- Search -->
+      <div class="search">
+        <fieldset>
+          <form method="get" class="searchForm">
+            <input type="text" id="custerFNameSearch" placeholder="First Name">
+            <input type="text" id="custerLNameSearch" placeholder="Last Name">
+            <input type="text" id="custerBdayFrom" placeholder="Birthday From">
+            <input type="text" id="custerBdayTo" placeholder="Birthday To">
+            <input type="text" id="custerRdayFrom" placeholder="Registered Ddate From">
+            <input type="text" id="custerRdayTo" placeholder="Registered Ddate To">
+            <input type="submit" id="searchCustomerSubmit" value="Search">
+          </form>
+        </fieldset>
+      </div>
+
+    <!-- read/update/delete data -->
+      <table class="table table-striped table-bordered" id="customertable">
+        <thead>
+          <tr>
+            <th>Customer Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Birthday</th>
+            <th></th>  <!-- Update id -->
+            <th></th>  <!-- Delete id -->
+          </tr>
+        </thead>
+        <tbody id="customertbody">
+          <!-- Render data here -->
+
+
+          <!-- Examples -->
+          <tr>
+            <td><form id="3">3</td>
+            <td><input type="text" name="fname" value="Jane" disabled></td>
+            <td><input type="text" name="lname" value="Hudson" disabled></td>
+            <td><input type="date" name="birthday" value="2003-03-03" disabled></td>
+            <td><button form="3" value="Update">Update</button></td>
+            <td><button form="3" value="Delete">Delete</button></td>
+          </tr>
+          <tr>
+            <td><form id="2">2</td>
+            <td><input type="text" name="fname" value="Jack" disabled></td>
+            <td><input type="text" name="lname" value="Tyler" disabled></td>
+            <td><input type="date" name="birthday" value="2002-02-02" disabled></td>
+            <td><button form="2" value="Update">Update</button></td>
+            <td><button form="2" value="Delete">Delete</button></td>
+          </tr>
+          <tr>
+            <td><form id="1">1</td>
+            <td><input type="text" name="fname" value="Emma" disabled></td>
+            <td><input type="text" name="lname" value="Woodhouse" disabled></td>
+            <td><input type="date" name="birthday" value="2001-01-01" disabled></td>
+            <td><button form="1" value="Update">Update</button></td>
+            <td><button form="1" value="Delete">Delete</button></td>
+          </tr>
+          <!-- End of Examples -->
+
+
+        </tbody>
+      </table>
     </div>
 
-
-
     <!-- script files -->
-    <script src="scripts.js"></script>
+    <script src="scripts/c_scripts.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>

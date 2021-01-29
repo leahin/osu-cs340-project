@@ -2,108 +2,153 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>ABC DB Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css" />
+    <title>Products | ABC DB</title>
   </head>
   <body>
-    <!-- menubar -->
-    <div class="menubar">
-      <li><a href="index.html">Home</a>
-      <li><a href="stores.html">Stores</a>
-      <li><a href="products.html">Products</a>
-      <li><a href="customers.html">Customers</a>
-      <li><a href="orders.html">Orders</a>
+    <!-- Bootstrap NavBar -->
+    <div class="fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="index.html">ABC DB</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="stores.html">Stores</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-item nav-link active" href="products.html">Products <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="customers.html">Customers</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="orders.html">Orders</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Reports
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="sales_report.html">Sales</a>
+                  <a class="dropdown-item" href="stores_products.html">Stores and Products</a>
+                  <a class="dropdown-item" href="customers_products.html">Customers and Products</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+    <div class="pbody">
+
+    <!-- Add Data -->
+    <div class="add">
+      <fieldset>
+        <legend>Add Product</legend>
+        <form method="post" class="addForm">
+          <input type="text" id="productName" placeholder="Product Name">
+          <input type="text" id="productPrice" placeholder="Price">
+          <input list="productTypes" name="productTypes" placeholder="Type">
+          <datalist id="productTypes">
+            <option value="Type 1">
+            <option value="Type 2">
+            <option value="Type 3">
+            <option value="Type 4">
+            <option value="Type 5">
+          </datalist>
+          <input type="submit" id="addProductSubmit" value="Submit">
+        </form>
+      </fieldset>
     </div>
 
-    <!-- create data -->
-    <fieldset>
-      <form method="post" id="pform">
-        <label for="pname">Product Name:</label>
-        <input type="text" id="pname" name="pname">
-        <label for="pprice">Product Price:</label>
-        <input type="text" id="pprice" name="pprice">
-        <input type="submit" id="psubmit">
-      </form>
-   </fieldset>
+    <!-- Search -->
+    <div class="search">
+      <fieldset>
+        <form method="get" class="searchForm">
+          <input type="text" id="productNameSearch" placeholder="Product Name">
+          <input type="text" id="productTypeSearch" placeholder="Type">
+          <input type="submit" id="searchProductSubmit" value="Search">
+        </form>
+      </fieldset>
+    </div>
 
     <!-- read/update/delete data -->
-    <table id="producttable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Type</th>
-          <th></th>  <!-- Update id = "pupdate" + "id"-->
-          <th></th>  <!-- Delete id = "pdelete" + "id"-->
-        </tr>
-      </thead>
-      <tbody id="producttbody">
-        <!-- Examples -->
-        <tr>
-          <th>5</th>
-          <th>Product 5</th>
-          <th>49.99</th>
-          <th>Type 3</th>
-          <th><form class="pupdate" id="pupdate5">
-              <button type="submit" form="pupdate5" value="Update">Update</button>
-              </form></th>
-          <th><form class="pdelete" id="pdelete5">
-              <button type="submit" form="pdelete5" value="Delete">Delete</button>
-              </form></th>
-        </tr>
-        <tr>
-          <th>4</th>
-          <th>Product 4</th>
-          <th>39.99</th>
-          <th>Type 2</th>
-          <th><form class="pupdate" id="pupdate4">
-              <button type="submit" form="pupdate4" value="Update">Update</button>
-              </form></th>
-          <th><form class="pdelete" id="pdelete4">
-              <button type="submit" form="pdelete4" value="Delete">Delete</button>
-              </form></th>
-        </tr>
-        <tr>
-          <th>3</th>
-          <th>Product 3</th>
-          <th>39.99</th>
-          <th>Type 3</th>
-          <th><form class="pupdate" id="pupdate3">
-              <button type="submit" form="pupdate3" value="Update">Update</button>
-              </form></th>
-          <th><form class="pdelete" id="pdelete3">
-              <button type="submit" form="pdelete3" value="Delete">Delete</button>
-              </form></th>
-        </tr>
-        <tr>
-          <th>2</th>
-          <th>Product 2</th>
-          <th>59.99</th>
-          <th>Type 2</th>
-          <th><form class="pupdate" id="pupdate2">
-              <button type="submit" form="pupdate2" value="Update">Update</button>
-              </form></th>
-          <th><form class="pdelete" id="pdelete2">
-              <button type="submit" form="pdelete2" value="Delete">Delete</button>
-              </form></th>
-        </tr>
-        <tr>
-          <th>1</th>
-          <th>Product 1</th>
-          <th>49.99</th>
-          <th>Type 1</th>
-          <th><form class="pupdate" id="pupdate1">
-              <button type="submit" form="pupdate1" value="Update">Update</button>
-              </form></th>
-          <th><form class="pdelete" id="pdelete1">
-              <button type="submit" form="pdelete1" value="Delete">Delete</button>
-              </form></th>
-        </tr>
-        <!-- End of Examples -->
-      </tbody>
-    </table>
+      <table class="table table-striped table-bordered" id="producttable">
+        <thead>
+          <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th></th>  <!-- Update -->
+            <th></th>  <!-- Delete -->
+          </tr>
+        </thead>
+        <tbody id="producttbody">
+          <!-- Render data here -->
+
+          <!-- Examples -->
+          <tr>
+            <td><form id="5">5</td>
+            <td><input type="text" name="name" value="Product 5" disabled></td>
+            <td><input type="text" name="price" value="59.99" disabled></td>
+            <td><input type="text" name="type" value="Type 5" disabled></td>
+            <td><button form="5" value="Update">Update</button></td>
+            <td><button form="5" value="Delete">Delete</button></td>
+          </tr>
+          <tr>
+            <td><form id="4">4</td>
+            <td><input type="text" name="name" value="Product 4" disabled></td>
+            <td><input type="text" name="price" value="49.99" disabled></td>
+            <td><input type="text" name="type" value="Type 4" disabled></td>
+            <td><button form="4" value="Update">Update</button></td>
+            <td><button form="4" value="Delete">Delete</button></td>
+          </tr>
+          <tr>
+            <td><form id="3">3</td>
+            <td><input type="text" name="name" value="Product 3" disabled></td>
+            <td><input type="text" name="price" value="39.99" disabled></td>
+            <td><input type="text" name="type" value="Type 3" disabled></td>
+            <td><button form="3" value="Update">Update</button></td>
+            <td><button form="3" value="Delete">Delete</button></td>
+          </tr>
+          <tr>
+            <td><form id="2">2</td>
+            <td><input type="text" name="name" value="Product 2" disabled></td>
+            <td><input type="text" name="price" value="29.99" disabled></td>
+            <td><input type="text" name="type" value="Type 2" disabled></td>
+            <td><button form="2" value="Update">Update</button></td>
+            <td><button form="2" value="Delete">Delete</button></td>
+          </tr>
+          <tr>
+            <td><form id="1">2</td>
+            <td><input type="text" name="name" value="Product 1" disabled></td>
+            <td><input type="text" name="price" value="19.99" disabled></td>
+            <td><input type="text" name="type" value="Type 1" disabled></td>
+            <td><button form="1" value="Update">Update</button></td>
+            <td><button form="1" value="Delete">Delete</button></td>
+          </tr>
+          <!-- End of Examples -->
+
+
+        </tbody>
+      </table>
+    </div>
+
     <!-- script files -->
-    <script src="scripts.js"></script>
+    <script src="scripts/p_scripts.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>

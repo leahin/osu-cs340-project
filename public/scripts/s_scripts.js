@@ -1,0 +1,1 @@
+// scripts for stores page

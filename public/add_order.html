@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="newWindow">
-      <form>
+      <form id="productOrderAdd">
         <div class="form-row">
           <div class="col-md-1 mb-1">
             <label for="storeId">Store Id</label>
@@ -31,21 +31,54 @@
         </div>
         <div class="form-row">
           <div class="col-md-1 mb-1">
-            <label for="productId">Product Id</label>
-            <input type="text" class="form-control" id="productId" required>
+            <label>Product Id</label>
+            <input type="text" class="form-control" required>
           </div>
           <div class="col-md-1 mb-1">
-            <label for="productQty">Qty</label>
-            <input type="text" class="form-control" id="productQty" required>
+            <label>Qty</label>
+            <input type="text" class="form-control" required>
           </div>
-        </div><br>
-        <button class="btn btn-primary" id="addProductButton">Add Product</button><br>
-        <button class="btn btn-primary" type="submit" style="margin-top:100px">Submit</button>
+        </div>
       </form>
+        <br>
+        <button class="btn btn-primary" id="addProductButton" onclick="addProduct()">Add Product</button><br>
+        <button class="btn btn-primary" type="submit" for="productOrderAdd" style="margin-top:100px">Submit</button>
     </div>
 
     <!-- script files -->
     <script src="scripts/o_scripts.js"></script>
+    <script>
+      function addProduct(){
+        var form = document.getElementById("productOrderAdd");
+
+        var div0 = document.createElement("div");
+        div0.setAttribute("class", "form-row");
+        form.appendChild(div0);
+
+        var div1 = document.createElement("div");
+        div1.setAttribute("class", "col-md-1 md-1");
+        var label1 = document.createElement("label")
+        label1.innerHTML = "Product Id";
+        var input1 = document.createElement("input")
+        input1.setAttribute("type", "text");
+        input1.setAttribute("class", "form-control");
+        div1.appendChild(label1);
+        div1.appendChild(input1);
+        div0.appendChild(div1);
+
+        var div2 = document.createElement("div");
+        div2.setAttribute("class", "col-md-1 md-1");
+        var label2 = document.createElement("label")
+        label2.innerHTML = "QTY";
+        var input2 = document.createElement("input")
+        input2.setAttribute("type", "text");
+        input2.setAttribute("class", "form-control");
+        div2.appendChild(label2);
+        div2.appendChild(input2);
+        div0.appendChild(div2);
+
+      }
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

@@ -92,7 +92,11 @@
             <td><input type="text" name="custId" value="3" disabled></td>
             <td><input type="text" name="storeId" value="3" disabled></td>
             <td><input type="date" name="orderDate" value="2021-01-03" disabled></td>
-            <td><a class="orderDetail" href="orders_products.html" target="_blank">Details</a></td>
+
+            <td>
+              <button onclick="openWin()">Details</button>
+            </td>
+
             <td><button form="3" value="Update">Update</button></td>
             <td><button form="3" value="Delete">Delete</button></td>
           </tr>
@@ -101,7 +105,9 @@
             <td><input type="text" name="custId" value="2" disabled></td>
             <td><input type="text" name="storeId" value="2" disabled></td>
             <td><input type="date" name="orderDate" value="2021-01-02" disabled></td>
-            <td><a class="orderDetail" href="orders_products.html" target="_blank">Details</a></td>
+            <td>
+              <button onclick="openWin()">Details</button>
+            </td>
             <td><button form="2" value="Update">Update</button></td>
             <td><button form="2" value="Delete">Delete</button></td>
           </tr>
@@ -110,7 +116,9 @@
             <td><input type="text" name="custId" value="1" disabled></td>
             <td><input type="text" name="storeId" value="1" disabled></td>
             <td><input type="date" name="orderDate" value="2021-01-01" disabled></td>
-            <td><a class="orderDetail" href="orders_products.html" target="_blank">Details</a></td>
+            <td>
+              <button onclick="openWin()">Details</button>
+            </td>
             <td><button form="1" value="Update">Update</button></td>
             <td><button form="1" value="Delete">Delete</button></td>
           </tr>
@@ -127,5 +135,16 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
+  
+    <script>
+      var myWindow;
+      
+      function openWin() {
+        myWindow = window.open("orders_products.html", "_blank", "width=800, height=800");
+      }
+</script>
+
+  
   </body>
 </html>

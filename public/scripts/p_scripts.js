@@ -1,1 +1,1 @@
-// Products
+// js for products.html

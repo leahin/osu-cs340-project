@@ -1,1 +1,1 @@
-// scripts for stores page
+// scripts for stores.html

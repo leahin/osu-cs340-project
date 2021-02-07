@@ -1,0 +1,30 @@
+{
+  "name": "osu-cs340-project",
+  "version": "1.0.0",
+  "description": "db app built with node js",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "forever": "^3.0.4",
+    "handlebars": "^4.7.6",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leahin/osu-cs340-project.git"
+  },
+  "keywords": [
+    "db"
+  ],
+  "author": "Leah In, Terrence Paz Dominguez-Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leahin/osu-cs340-project/issues"
+  },
+  "homepage": "https://github.com/leahin/osu-cs340-project#readme"
+}

@@ -60,6 +60,12 @@ INSERT into abc_stores (store_name, street_address, state, zip_code) VALUES
 -- Dumping Data for Customers
 
 INSERT into abc_customers (first_name, last_name, birthday) VALUES
-('Terrence', 'Dominguez-Smith', 12/23/1985)
+('Terrence', 'Dominguez-Smith', '1985-12-23'),
+('Carla', 'Kitzia', '1991-06-04'),
+('Christopher', 'Day', '1990-08-11'),
+('Ciara', 'Woods', '1958-11-12'),
+('Shay', 'Stevens', '1981-03-16'),
+('John', 'Chapman', '1996-10-21'),
+('Reynold', 'Ericson', '2000-11-05')
 
 ;

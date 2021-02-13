@@ -1,1 +1,0 @@
-// scripts for stores.html

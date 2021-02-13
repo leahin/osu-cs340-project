@@ -9,11 +9,13 @@
       <input type="text" id="productPrice" placeholder="Price">
       <input list="productTypes" name="productTypes" placeholder="Type">
       <datalist id="productTypes">
-        <option value="Type 1">
-        <option value="Type 2">
-        <option value="Type 3">
-        <option value="Type 4">
-        <option value="Type 5">
+        <option value="Type A">
+        <option value="Type B">
+        <option value="Type C">
+        <option value="Type D">
+        <option value="Type E">
+        <option value="Type F">
+        <option value="Type G">
       </datalist>
       <input type="submit" id="addProductSubmit" value="Submit">
     </form>
@@ -43,16 +45,5 @@
         <th></th>  <!-- Delete -->
       </tr>
     </thead>
-    <tbody id="producttbody">
-      {{#each}}
-        <tr>
-          <td><form id={{this.id}}>{{this.id}}</td>
-          <td><input type="text" name="name" value={{this.name}} disabled></td>
-          <td><input type="text" name="price" value={{this.pice}} disabled></td>
-          <td><input type="text" name="type" value={{this.type}} disabled></td>
-          <td><button form={{this.id}} value="Update">Update</button></td>
-          <td><button form={{this.id}} value="Delete">Delete</button></td>
-        </tr>
-      {{/each}}
-    </tbody>
+
   </table>

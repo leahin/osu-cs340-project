@@ -29,7 +29,7 @@ CREATE TABLE `abc_customers` (
   `customer_id` INT(11) AUTO_INCREMENT NOT NULL,
   `first_name` VARCHAR(255) NOT NULL,
   `last_name` VARCHAR(255) NOT NULL,
-  `birthday` date NOT NULL,
+  `birthdate` date NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 

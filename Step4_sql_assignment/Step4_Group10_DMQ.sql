@@ -7,13 +7,13 @@ SELECT * FROM `abc_stores`;
 SELECT * FROM `abc_stores` WHERE store_name = :storeName;
 
 -- 2. add
-INSERT INTO `abc_stores` (store_name, street_address, state, zip_code) 
+INSERT INTO `abc_stores` (store_name, street_address, state, zip_code)
 VALUES (:storeName, :storeStreetAddress, :storeState, :storeZipCode);
 
 -- 3. update
 UPDATE `abc_stores`
 SET store_name = :storeName, street_address = :storeStreetAddress, state = :storeState, zip_code = :storeZipCode
-WHERE store_id = :storeId
+WHERE store_id = :storeId;
 
 -- 4. delete
 DELETE FROM `abc_stores` WHERE store_id = :storeId;
@@ -25,14 +25,16 @@ DELETE FROM `abc_stores` WHERE store_id = :storeId;
 SELECT * FROM `abc_customers`;
 
 -- filters
-SELECT * FROM `abc_customer` WHERE first_name = :customerFNAme;
+SELECT * FROM `abc_customer` WHERE first_name = :customerFName AND last_name = :customerLName;
+SELECT * FROM `abc_customer` WHERE birthdate >= :birthdateFrom AND birthdate <= :birthdateTo;
+
 -- 2. add
-INSERT INTO `abc_customers` (first_name, last_name, birthday)
+INSERT INTO `abc_customers` (first_name, last_name, birthdate)
 VALUES (:customerFName, :customerLName, :customerBday);
 
 -- 3. update
 UPDATE `abc_customers`
-SET first_name = :customerFName, last_name = :customerLName, birthday = :customerBday
+SET first_name = :customerFName, last_name = :customerLName, birthdate = :customerBday
 WHERE customer_id = custId;
 
 -- 4. delete

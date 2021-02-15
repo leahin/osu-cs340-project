@@ -12,14 +12,28 @@ module.exports = function(router){
 
     // TODO: delete dummyData
     var dummyData = [
-      {'id': '1', 'name': 'Product A', 'price': '19.99', 'type': 'Type A'},
-      {'id': '2', 'name': 'Product B', 'price': '29.99', 'type': 'Type B'},
-      {'id': '3', 'name': 'Product C', 'price': '39.99', 'type': 'Type C'},
-      {'id': '4', 'name': 'Product D', 'price': '49.99', 'type': 'Type D'},
-      {'id': '5', 'name': 'Product E', 'price': '59.99', 'type': 'Type E'}
+      [1, 'Bubble', 29.99],
+      [2, 'Puffs', 29.99],
+      [3, 'Productify', 39.99],
+      [4, 'Prodcutjet', 39.99],
+      [5, 'Microzen', 69.99],
+      [6, 'Microcog', 79.99],
+      [7, 'Reboot Link', 80.25],
+      [8, 'Repair Link', 85.25],
+      [9, 'Jam', 45.50],
+      [10, 'Data', 40.75]
     ];
 
-    context['productList'] = dummyData;
+    var inputList = [];
+    for (i = dummyData.length - 1; i > -1; i--) {
+      temp = {};
+      data = dummyData[i];
+      temp['id'] = data[0];
+      temp['name'] = data[1];
+      temp['price'] = data[2].toFixed(2);
+      inputList.push(temp);
+    }
+    context['inputList'] = inputList;
     res.render('products', context);
   });
 

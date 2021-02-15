@@ -5,23 +5,13 @@
     <form method="post" class="addForm">
       <input type="text" id="productName" placeholder="Product Name">
       <input type="text" id="productPrice" placeholder="Price">
-      <input list="productTypes" name="productTypes" placeholder="Type">
-      <datalist id="productTypes">
-        <option value="Type A">
-        <option value="Type B">
-        <option value="Type C">
-        <option value="Type D">
-        <option value="Type E">
-        <option value="Type F">
-        <option value="Type G">
-      </datalist>
       <input type="submit" id="addProductSubmit" value="Submit">
     </form>
   </fieldset>
 </div>
 
 <!-- Search -->
-<div class="search">
+<div class="add search">
   <fieldset>
     <form method="get" class="searchForm">
       <input type="text" id="productNameSearch" placeholder="Product Name">
@@ -38,19 +28,17 @@
         <th>Product Id</th>
         <th>Product Name</th>
         <th>Price</th>
-        <th>Type</th>
         <th></th>  <!-- Update -->
         <th></th>  <!-- Delete -->
       </tr>
     </thead>
 
     <tbody id="producttbody">
-    {{#each productList}}
+    {{#each inputList}}
       <tr>
         <td><form id="{{this.id}}">{{this.id}}</form></td>
         <td><input form="{{this.id}}" type="text" name="name" value="{{this.name}}" disabled></td>
         <td><input form="{{this.id}}" type="text" name="price" value="{{this.price}}" disabled></td>
-        <td><input form="{{this.id}}" type="text" name="type" value="{{this.type}}" disabled></td>
         <td><button form="{{this.id}}" value="Update">Update</button></td>
         <td><button form="{{this.id}}" value="Delete">Delete</button></td>
       </tr>

@@ -34,6 +34,7 @@ module.exports = function(router){
       inputList.push(temp);
     }
     context['inputList'] = inputList;
+    JSON.stringify(context);
     res.render('products', context);
   });
 

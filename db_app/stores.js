@@ -19,6 +19,7 @@ module.exports = function(router){
     ];
 
     context['storeList'] = dummyData;
+    JSON.stringify(context);
     res.render('stores', context);
   });
 

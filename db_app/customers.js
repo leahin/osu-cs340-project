@@ -19,6 +19,7 @@ module.exports = function(router){
     ];
 
     context['customerList'] = dummyData;
+    JSON.stringify(context);
     res.render('customers', context);
   });
 

@@ -13,15 +13,16 @@
 </div>
 
 <!-- Search -->
-<div class="search">
+<div class="add search">
   <fieldset>
+    <legend>Search Customer</legend>
     <form method="get" class="searchForm">
       <input type="text" id="custerFNameSearch" placeholder="First Name">
       <input type="text" id="custerLNameSearch" placeholder="Last Name">
-      <input type="text" id="custerBdayFrom" placeholder="Birthday From">
-      <input type="text" id="custerBdayTo" placeholder="Birthday To">
-      <input type="text" id="custerRdayFrom" placeholder="Registered Ddate From">
-      <input type="text" id="custerRdayTo" placeholder="Registered Ddate To">
+      <input type="text" id="custerBdayFrom" placeholder="Birthdate From">
+      <input type="text" id="custerBdayTo" placeholder="Birthdate To">
+      <!-- <input type="text" id="custerRdayFrom" placeholder="Registered Date From">
+      <input type="text" id="custerRdayTo" placeholder="Registered Date To"> -->
       <input type="submit" id="searchCustomerSubmit" value="Search">
     </form>
   </fieldset>
@@ -35,6 +36,7 @@
       <th>First Name</th>
       <th>Last Name</th>
       <th>Birthdate</th>
+      <!-- <th>Registered Date</th> -->
       <th></th>  <!-- Update id -->
       <th></th>  <!-- Delete id -->
     </tr>
@@ -47,6 +49,7 @@
         <td><input form="{{this.id}}" type="text" name="fname" value="{{this.fname}}" disabled></td>
         <td><input form="{{this.id}}" type="text" name="lname" value="{{this.lname}}" disabled></td>
         <td><input form="{{this.id}}" type="date" name="birthdate" value="{{this.birthdate}}" disabled></td>
+        <!-- <td><input form="{{this.id}}" type="date" name="birthdate" value="{{this.rDate}}" disabled></td> -->
         <td><button form="{{this.id}}" value="Update">Update</button></td>
         <td><button form="{{this.id}}" value="Delete">Delete</button></td>
       </tr>

@@ -20,28 +20,28 @@ require('./stores_products')(router);
 require('./customers_products')(router);
 app.use(express.static('../public'));
 
-app.set('port', 3000);
+app.set('port', 7892);
 
 
 // routers
 router.get('/', function(req, res){
   var context = {'title': 'Home', 'script': 'home'};
+  JSON.stringify(context);
   res.render('home', context);
 });
 
-app.get('/add_orders', function(req, res){
-  res.render('add_orders.html');
-});
-
-app.get('/orders_products', function(req, res){
-  res.sendFile(path.join(__dirname + '/orders_products.html'));
-});
+// app.get('/add_orders', function(req, res){
+//   res.render('add_orders.html');
+// });
+//
+// app.get('/orders_products', function(req, res){
+//   res.sendFile(path.join(__dirname + '/orders_products.html'));
+// });
 
 
 // post
 app.post('/', function(req, res){
-  res.render('home',
-);
+  res.render('home');
 });
 
 

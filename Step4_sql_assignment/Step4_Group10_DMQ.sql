@@ -73,7 +73,7 @@ INSERT INTO `abc_orders` (cid, sid, order_date)
 VALUES (:custId, :storeId, :orderDate);
 
 -- 3. update
-UPDATE `abc_orders` SET cid=:custId, sid=:stpreId, order_date=:orderDate WHERE order_id=:orderId;
+UPDATE `abc_orders` SET cid=:custId, sid=:storeId, order_date=:orderDate WHERE order_id=:orderId;
 
 -- 4. delete
 DELETE FROM `abc_orders` WHERE order_id=:orderId;
@@ -84,11 +84,20 @@ DELETE FROM `abc_orders` WHERE order_id=:orderId;
 SELECT * FROM `abc_orders_products` WHERE oid=:olderId;
 
 -- 2. add
-INSERT INTO `abc_orders_products` (pid, oid, quantity)
-VALUES (:productId, :olderId, :quantity);
+INSERT INTO `abc_orders_products` (pid, oid, quantity, total_price)
+VALUES (:productId, :olderId, :quantity, :totalPrice_unit_times_quantity);
 
 -- 3. update
-UPDATE `abc_orders_products` SET pid=:productId, oid=:orderId, quantity=:quantity WHERE oid=:olderId AND pid=:productId;
+UPDATE `abc_orders_products` SET pid=:productId, oid=:orderId, quantity=:quantity, total_price=:totalPrice_unit_times_quantity
+WHERE oid=:olderId AND pid=:productId;
 
 -- 4. delete
 DELETE FROM `abc_orders_products` WHERE oid=:orderId AND pid=:productId;
+
+
+-- Sales
+SELECT s.store_name, SUM(op.total_price) AS total_sales FROM abc_orders_products AS op
+INNER JOIN abc_orders AS o ON op.oid = o.order_id
+INNER JOIN abc_stores AS s ON o.sid = s.store_id
+GROUP BY s.store_id
+ORDER BY total_sales DESC;

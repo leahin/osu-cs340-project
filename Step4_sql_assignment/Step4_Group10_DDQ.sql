@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS `abc_orders`;
 DROP TABLE IF EXISTS `abc_orders_products`;
 SET FOREIGN_KEY_CHECKS=1;
 
-
 -- Create Stores Table
 CREATE TABLE `abc_stores` (
   `store_id` INT(11) AUTO_INCREMENT NOT NULL,
@@ -28,7 +27,6 @@ INSERT INTO `abc_stores` VALUES
   (7, 'ABC Houston Galleria', '5192 Hidalgo Street', 'TX', '77056'),
   (8, 'ABC Boston', '497 Boylston St', 'MA', '02116')
   ;
-
 
 -- Create Customers Table
 CREATE TABLE `abc_customers` (
@@ -51,7 +49,6 @@ INSERT into `abc_customers` VALUES
   (8, 'Zaynab', 'House', '2002-07-07')
   ;
 
-
 -- Create Products Table
 CREATE TABLE `abc_products` (
   `product_id` INT(11) AUTO_INCREMENT NOT NULL,
@@ -73,7 +70,6 @@ INSERT INTO abc_products VALUES
   (10, 'Data', 40.75)
   ;
 
-
 -- Create Orders Table
 CREATE TABLE `abc_orders` (
   `order_id` INT(11) AUTO_INCREMENT NOT NULL,
@@ -83,7 +79,7 @@ CREATE TABLE `abc_orders` (
   PRIMARY KEY (`order_id`),
   FOREIGN KEY (`cid`) REFERENCES `abc_customers` (`customer_id`),
   FOREIGN KEY (`sid`) REFERENCES `abc_stores` (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 -- Dumping Data for orders
 INSERT INTO `abc_orders` VALUES
   (1, 8, 1, '2019-05-07'),
@@ -98,38 +94,39 @@ INSERT INTO `abc_orders` VALUES
   (10, 1, 8, '2021-02-10')
   ;
 
-
 -- Create Orders_products Table
 CREATE TABLE `abc_orders_products` (
   `pid` INT(11),
   `oid` INT(11),
   `quantity` TINYINT(1) NOT NULL,
+  `total_price` DECIMAL(15, 2) NOT NULL,
   PRIMARY KEY (`pid`, `oid`),
   FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`),
   FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`)
     ON DELETE CASCADE,
-  CONSTRAINT CHK_quantity CHECK (quantity > 0)
-  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;;
+  CONSTRAINT CHK_quantity CHECK (quantity > 0),
+  CONSTRAINT CHK_total_price CHECK (total_price > 0)
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 -- Dumping Data for orders_products
 INSERT INTO `abc_orders_products` VALUES
-  (3, 1, 1),
-  (4, 1, 2),
-  (5, 1, 2),
-  (1, 2, 3),
-  (2, 2, 2),
-  (6, 3, 4),
-  (7, 4, 5),
-  (8, 4, 1),
-  (9, 4, 1),
-  (1, 5, 2),
-  (10, 6, 3),
-  (8, 7, 4),
-  (9, 7, 4),
-  (10, 7, 5),
-  (2, 8, 2),
-  (3, 8, 2),
-  (4, 8, 2),
-  (2, 9, 4),
-  (3, 9, 5),
-  (1, 10, 10)
+  (3, 1, 1, 39.99),
+  (4, 1, 2, 79.98),
+  (5, 1, 2, 139.98),
+  (1, 2, 3, 89.97),
+  (2, 2, 2, 59.98),
+  (6, 3, 4, 319.96),
+  (7, 4, 5, 401.25),
+  (8, 4, 1, 85.25),
+  (9, 4, 1, 45.50),
+  (1, 5, 2, 59.98),
+  (10, 6, 3, 122.25),
+  (8, 7, 4, 341.00),
+  (9, 7, 4, 182.00),
+  (10, 7, 5, 203.75),
+  (2, 8, 2, 59.98),
+  (3, 8, 2, 79.98),
+  (4, 8, 2, 79.98),
+  (2, 9, 4, 119.96),
+  (3, 9, 5, 199.95),
+  (1, 10, 10, 299.90)
   ;

@@ -32,6 +32,7 @@ CREATE TABLE `abc_customers` (
   `birthday` date NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
 -- Dumping Data for Customers
 INSERT into `abc_customers` VALUES
   (1, 'Terrence', 'Dominguez-Smith', '1985-12-23'),

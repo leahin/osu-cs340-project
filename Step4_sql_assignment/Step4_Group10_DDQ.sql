@@ -1,7 +1,13 @@
 
 SET FOREIGN_KEY_CHECKS=0;
-
 DROP TABLE IF EXISTS `abc_stores`;
+DROP TABLE IF EXISTS `abc_customers`;
+DROP TABLE IF EXISTS `abc_products`;
+DROP TABLE IF EXISTS `abc_orders`;
+DROP TABLE IF EXISTS `abc_orders_products`;
+SET FOREIGN_KEY_CHECKS=1;
+
+
 -- Create Stores Table
 CREATE TABLE `abc_stores` (
   `store_id` INT(11) AUTO_INCREMENT NOT NULL,
@@ -23,7 +29,7 @@ INSERT INTO `abc_stores` VALUES
   (8, 'ABC Boston', '497 Boylston St', 'MA', '02116')
   ;
 
-DROP TABLE IF EXISTS `abc_customers`;
+
 -- Create Customers Table
 CREATE TABLE `abc_customers` (
   `customer_id` INT(11) AUTO_INCREMENT NOT NULL,
@@ -45,7 +51,7 @@ INSERT into `abc_customers` VALUES
   (8, 'Zaynab', 'House', '2002-07-07')
   ;
 
-DROP TABLE IF EXISTS `abc_products`;
+
 -- Create Products Table
 CREATE TABLE `abc_products` (
   `product_id` INT(11) AUTO_INCREMENT NOT NULL,
@@ -67,7 +73,7 @@ INSERT INTO abc_products VALUES
   (10, 'Data', 40.75)
   ;
 
-DROP TABLE IF EXISTS `abc_orders`;
+
 -- Create Orders Table
 CREATE TABLE `abc_orders` (
   `order_id` INT(11) AUTO_INCREMENT NOT NULL,
@@ -92,7 +98,7 @@ INSERT INTO `abc_orders` VALUES
   (10, 1, 8, '2021-02-10')
   ;
 
-DROP TABLE IF EXISTS `abc_orders_products`;
+
 -- Create Orders_products Table
 CREATE TABLE `abc_orders_products` (
   `pid` INT(11),
@@ -100,7 +106,8 @@ CREATE TABLE `abc_orders_products` (
   `quantity` TINYINT(1) NOT NULL,
   PRIMARY KEY (`pid`, `oid`),
   FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`),
-  FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`),
+  FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`)
+    ON DELETE CASCADE,
   CONSTRAINT CHK_quantity CHECK (quantity > 0)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1;;
 -- Dumping Data for orders_products

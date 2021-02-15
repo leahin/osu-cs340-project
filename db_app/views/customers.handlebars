@@ -1,0 +1,53 @@
+<!-- Add Data -->
+<div class="add">
+  <fieldset>
+    <legend>Add Customer</legend>
+    <form method="post" class="addForm">
+      <input type="text" id="customerFName" placeholder="First Name">
+      <input type="text" id="customerLName" placeholder="Last Name">
+      <input type="text" id="customerBday" placeholder="Birthday">
+      <input type="text" id="customerRday" placeholder="Registered Date">
+      <input type="submit" id="addCustomerSubmit" value="Submit">
+    </form>
+  </fieldset>
+</div>
+
+<!-- Search -->
+<div class="search">
+  <fieldset>
+    <form method="get" class="searchForm">
+      <input type="text" id="custerFNameSearch" placeholder="First Name">
+      <input type="text" id="custerLNameSearch" placeholder="Last Name">
+      <input type="text" id="custerBdayFrom" placeholder="Birthday From">
+      <input type="text" id="custerBdayTo" placeholder="Birthday To">
+      <input type="text" id="custerRdayFrom" placeholder="Registered Ddate From">
+      <input type="text" id="custerRdayTo" placeholder="Registered Ddate To">
+      <input type="submit" id="searchCustomerSubmit" value="Search">
+    </form>
+  </fieldset>
+</div>
+
+<!-- read/update/delete data -->
+<table class="table table-striped table-bordered" id="customertable">
+  <thead>
+    <tr>
+      <th>Customer Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Birthdate</th>
+      <th></th>  <!-- Update id -->
+      <th></th>  <!-- Delete id -->
+    </tr>
+  </thead>
+  <tbody id="customertbody">
+    <!-- Render data here -->
+    {{#each customerList}}
+      <tr>
+        <td><form id="{{this.id}}">{{this.id}}</form></td>
+        <td><input form="{{this.id}}" type="text" name="fname" value="{{this.fname}}" disabled></td>
+        <td><input form="{{this.id}}" type="text" name="lname" value="{{this.lname}}" disabled></td>
+        <td><input form="{{this.id}}" type="date" name="birthdate" value="{{this.birthdate}}" disabled></td>
+        <td><button form="{{this.id}}" value="Update">Update</button></td>
+        <td><button form="{{this.id}}" value="Delete">Delete</button></td>
+      </tr>
+    {{/each}}

@@ -1,4 +1,5 @@
 // js for orders.html
+navCurrent("navOrders");
 
 var myWindow;
 

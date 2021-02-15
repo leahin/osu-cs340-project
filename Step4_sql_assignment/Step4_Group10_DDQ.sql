@@ -99,7 +99,8 @@ CREATE TABLE `abc_orders_products` (
   `quantity` TINYINT(1) NOT NULL,
   PRIMARY KEY (`pid`, `oid`),
   FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`),
-  FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`)
+  FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`),
+  CONSTRAINT CHK_quantity CHECK (quantity > 0)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1;;
 -- Dumping Data for orders_products
 INSERT INTO `abc_orders_products` VALUES

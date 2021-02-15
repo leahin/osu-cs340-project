@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+var path = require('path');
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -33,7 +34,7 @@ app.get('/add_orders', function(req, res){
 });
 
 app.get('/orders_products', function(req, res){
-  res.render('orders_products.html');
+  res.sendFile(path.join(__dirname + '/orders_products.html'));
 });
 
 

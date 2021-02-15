@@ -51,7 +51,7 @@ CREATE TABLE `abc_products` (
   `product_name` VARCHAR(255) NOT NULL,
   `product_price` DECIMAL(15, 2) NOT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 -- Dumping Data for products
 INSERT INTO abc_products VALUES
   (1, 'Bubble', 29.99),

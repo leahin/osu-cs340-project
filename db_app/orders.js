@@ -5,19 +5,36 @@ var router = express.Router();
 module.exports = function(router){
 
   router.get('/orders', function(req, res){
-    var context = {'title': 'Products', 'script': 'products'};
+    var context = {'title': 'Orders', 'script': 'orders'};
 
     // TODO: sql statement goes here...
     // TODO: use loop to create an array & mapping
 
     // TODO: delete dummyData
     var dummyData = [
-      {'id': '1', 'custId': '1', 'storeId': '1', 'orderDate': '2021-01-02'},
-      {'id': '2', 'custId': '2', 'storeId': '2', 'orderDate': '2021-01-03'},
-      {'id': '3', 'custId': '3', 'storeId': '3', 'orderDate': '2021-01-04'},
+      [1, 8, 1, '2019-05-07'],
+      [2, 7, 2, '2019-06-08'],
+      [3, 6, 3, '2019-06-08'],
+      [4, 5, 4, '2019-07-12'],
+      [5, 4, 5, '2019-08-31'],
+      [6, 3, 6, '2020-01-05'],
+      [7, 2, 7, '2020-03-15'],
+      [8, 1, 8, '2021-01-10'],
+      [9, 2, 7, '2021-01-28'],
+      [10, 1, 8, '2021-02-10']
     ];
 
-    context['orderList'] = dummyData;
+    var inputList = [];
+    for (i = dummyData.length - 1; i > -1; i--) {
+      temp = {};
+      data = dummyData[i];
+      temp['id'] = data[0];
+      temp['custId'] = data[1];
+      temp['storeId'] = data[2];
+      temp['orderDate'] = data[3];
+      inputList.push(temp);
+    }
+    context['inputList'] = inputList;
     res.render('orders', context);
   });
 

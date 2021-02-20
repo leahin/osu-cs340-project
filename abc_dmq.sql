@@ -64,9 +64,7 @@ DELETE FROM `abc_products` WHERE product_id=:productId;
 -- 1. read
 SELECT * FROM `abc_orders`;
 -- filters
-SELECT * FROM `abc_orders` WHERE oid=:orderId;
-SELECT * FROM `abc_orders` WHERE cid=:customerId;
-SELECT * FROM `abc_orders` WHERE sid=:storeId;
+SELECT * FROM `abc_orders` WHERE order_id=:orderId;
 
 -- 2. add
 INSERT INTO `abc_orders` (cid, sid, order_date)

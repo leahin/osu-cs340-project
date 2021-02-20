@@ -57,7 +57,7 @@ CREATE TABLE `abc_products` (
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 -- Dumping Data for products
-INSERT INTO abc_products VALUES
+INSERT INTO `abc_products` VALUES
   (1, 'Bubble', 29.99),
   (2, 'Puffs', 29.99),
   (3, 'Productify', 39.99),
@@ -77,8 +77,8 @@ CREATE TABLE `abc_orders` (
   `sid` INT(11),
   `order_date` date NOT NULL DEFAULT CURRENT_DATE(),
   PRIMARY KEY (`order_id`),
-  FOREIGN KEY (`cid`) REFERENCES `abc_customers` (`customer_id`),
-  FOREIGN KEY (`sid`) REFERENCES `abc_stores` (`store_id`)
+  FOREIGN KEY (`cid`) REFERENCES `Customers` (`customer_id`),
+  FOREIGN KEY (`sid`) REFERENCES `Stores` (`store_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 -- Dumping Data for orders
 INSERT INTO `abc_orders` VALUES
@@ -101,8 +101,8 @@ CREATE TABLE `abc_orders_products` (
   `quantity` TINYINT(1) NOT NULL,
   `total_price` DECIMAL(15, 2) NOT NULL,
   PRIMARY KEY (`pid`, `oid`),
-  FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`),
-  FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`)
+  FOREIGN KEY (`pid`) REFERENCES `Products` (`product_id`),
+  FOREIGN KEY (`oid`) REFERENCES `Orders` (`order_id`)
     ON DELETE CASCADE,
   CONSTRAINT CHK_quantity CHECK (quantity > 0),
   CONSTRAINT CHK_total_price CHECK (total_price > 0)

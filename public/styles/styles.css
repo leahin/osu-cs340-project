@@ -11,13 +11,8 @@
   margin-right: 10%;
 }
 
-/* Table: Search & Filter */
-.search {
-
-}
-
-/* Add form */
-.add {
+/* Add/Search form */
+.form {
   margin-bottom: 30px;
   padding: 15px;
   border-radius: 5px;
@@ -40,10 +35,6 @@ tbody > button {
 tbody > input {
   display: block;
   margin: 0 auto;
-}
-
-button {
-
 }
 
 /* new Window contents*/

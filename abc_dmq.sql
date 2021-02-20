@@ -94,7 +94,7 @@ DELETE FROM `abc_orders_products` WHERE oid=:orderId AND pid=:productId;
 
 
 -- Sales
-SELECT s.store_name, SUM(op.total_price) AS total_sales FROM abc_orders_products AS op
+SELECT s.store_id, s.store_name, SUM(op.total_price) AS total_sales FROM abc_orders_products AS op
 INNER JOIN abc_orders AS o ON op.oid = o.order_id
 INNER JOIN abc_stores AS s ON o.sid = s.store_id
 GROUP BY s.store_id

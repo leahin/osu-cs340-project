@@ -1,5 +1,5 @@
 <!-- Add data -->
-<div class="add">
+<div class="form">
   <fieldset>
     <legend>Add Store</legend>
     <form method="post" class="addForm">
@@ -13,7 +13,7 @@
 </div>
 
 <!-- Search data-->
-<div class="add search">
+<div class="form">
   <fieldset>
     <legend>Search Store</legend>
     <form method="get" class="searchForm">
@@ -32,16 +32,15 @@
         <th>Street Address</th>
         <th>State</th>
         <th>Zip Code</th>
-        <th></th>  <!-- Update -->
-        <th></th>  <!-- Delete -->
+        <th></th>
+        <th></th>
       </tr>
     </thead>
-    <tbody id="storetbody">
-      <!-- Render data here -->
-    {{#each storeList}}
+    <tbody>
+    {{#each inputList}}
       <tr>
         <td><form id="{{this.id}}">{{this.id}}</form></td>
-        <td><input form="{{this.id}}" type="text" name="name" value="{{this.name}}" disabled></td>
+        <td><input form="{{this.id}}" type="text" name="name" value="{{{this.name}}}" disabled></td>
         <td><input form="{{this.id}}" type="text" name="address" value="{{this.address}}" disabled></td>
         <td><input form="{{this.id}}" type="text" name="state" value="{{this.state}}" disabled></td>
         <td><input form="{{this.id}}" type="text" name="zipcode" value="{{this.zipcode}}" disabled></td>

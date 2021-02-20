@@ -1,3 +1,19 @@
-<p>Sales Page</p>
-<p>Users submit a certain range of dates to check the sales of each store within the period.
-   <br>(M:M Orders and Products, 1:M Stores and Orders)</P>
+<h1>Sales</h1>
+<br>
+<table class="table table-striped table-bordered" id="salestable">
+  <thead>
+    <tr>
+      <th>Store Id</th>
+      <th>Store Name</th>
+      <th>Total Sales</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each inputList}}
+      <tr>
+        <td>{{this.store_id}}</td>
+        <td>{{{this.store_name}}}</td>
+        <td>${{this.total_sales}}</td>
+      </tr>
+    {{/each}}
+  </tbody>

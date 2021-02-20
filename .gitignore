@@ -1,4 +1,4 @@
-db_app/dbcon.js
+dbcon.js
 /.vs
 /node_modules
 package-lock.json

@@ -21,6 +21,17 @@
   border-color: grey;
 }
 
+button {
+  border-color: #555;
+  border-radius: 2px;
+  padding: 5px 15px;
+}
+
+
+button:hover {
+  background-color: #555;
+}
+
 /* Table: Text*/
 tr {
   text-align: center;

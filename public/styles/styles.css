@@ -11,6 +11,11 @@
   margin-right: 15%;
 }
 
+.pbody2{
+  margin: 0 auto;
+  padding: 3% 3%;
+}
+
 /* Add/Search form */
 .form {
   margin-bottom: 30px;

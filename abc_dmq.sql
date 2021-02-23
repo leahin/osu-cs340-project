@@ -48,12 +48,12 @@ SELECT * FROM `abc_products`;
 SELECT * FROM `abc_products` WHERE product_name = :productName;
 
 -- 2. add
-INSERT INTO `abc_products` (product_name, product_price, product_type)
-VALUES (:productName, :productPrice, :productType);
+INSERT INTO `abc_products` (product_name, product_price)
+VALUES (:productName, :productPrice);
 
 -- 3. update
 UPDATE `abc_products`
-SET product_name = :productName, product_price = :productPrice, product_type = :productTypes
+SET product_name = :productName, product_price = :productPrice
 WHERE product_id = :productId;
 
 -- 4. delete

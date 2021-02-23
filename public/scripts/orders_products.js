@@ -1,1 +1,4 @@
-// js for orders_products.html
+const closeButton = document.getElementById("closeOrderDetails");
+closeButton.addEventListener('click', (event) => {
+  window.close();
+})

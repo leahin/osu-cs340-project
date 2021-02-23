@@ -1,56 +1,103 @@
+module.exports = function(){
+  var express = require('express');
+  var router = express.Router();
 
-var express = require('express');
-var router = express.Router();
+  var getQuery = 'SELECT * FROM abc_products ORDER BY product_id DESC';
+  var searchQuery = 'SELECT * FROM abc_products WHERE product_name = ? ORDER BY product_id DESC';
+  var insertQuery = 'INSERT INTO abc_products (product_name, product_price) VALUES (?, ?)';
+  var updateQuery = 'UPDATE abc_products SET product_name = ?, product_price = ? WHERE product_id = ?';
+  var deleteQuery = 'DELETE FROM abc_products WHERE product_id = ?';
 
-module.exports = function(router){
 
-  router.get('/products', function(req, res){
-    var context = {'title': 'Products', 'script': 'products'};
-
-    // TODO: sql statement goes here...
-    // TODO: use loop to create an array & mapping
-
-    // TODO: delete dummyData
-    var dummyData = [
-      [1, 'Bubble', 29.99],
-      [2, 'Puffs', 29.99],
-      [3, 'Productify', 39.99],
-      [4, 'Prodcutjet', 39.99],
-      [5, 'Microzen', 69.99],
-      [6, 'Microcog', 79.99],
-      [7, 'Reboot Link', 80.25],
-      [8, 'Repair Link', 85.25],
-      [9, 'Jam', 45.50],
-      [10, 'Data', 40.75]
-    ];
-
+  function getProductInputList(results){
+    var context = {'title': 'Products', 'jsscripts': ['scripts', 'products']};
     var inputList = [];
-    for (i = dummyData.length - 1; i > -1; i--) {
-      temp = {};
-      data = dummyData[i];
-      temp['id'] = data[0];
-      temp['name'] = data[1];
-      temp['price'] = data[2].toFixed(2);
-      inputList.push(temp);
-    }
+
+    for (i = 0; i < results.length; i++){
+      var data = results[i];
+      var temp = {};
+      temp['product_id'] = data.product_id;
+      temp['product_name'] = data.product_name;
+      temp['product_price'] = data.product_price;
+      inputList.push(temp)
+    };
+
     context['inputList'] = inputList;
-    JSON.stringify(context);
-    res.render('products', context);
-  });
+    JSON.stringify(context)
+
+    return context;
+  };
 
 
-  router.post('/products', function(req, res){
-    // TODO: insert INTO
-  });
+  function getProducts(req, res){
+    var mysql = req.app.get('mysql');
+
+    mysql.pool.query(getQuery, (error, results, fields) => {
+      res.render('products', getProductInputList(results))
+    })
+  };
 
 
-  router.put('/products', function(req, res){
-    // TODO: update
-  });
+  function searchProduct(req, res){
+    var mysql = req.app.get('mysql');
+    var productName = req.body.productName;
+
+    mysql.pool.query(searchQuery, productName, (error, results, fields) => {
+      res.render('products', getProductInputList(results))
+    })
+  };
 
 
-  router.delete('/products', function(req, res){
-    // TODO: delete
-  });
+  function insertProduct(req, res){
+    var mysql = req.app.get('mysql');
+    var {productName, productPrice} = req.body;
 
-};
+    // TODO: user input validation
+    if (productName === ""){
+
+    }
+    if (productPrice <= 0) {
+
+    }
+
+    mysql.pool.query (insertQuery, [productName, productPrice])
+    res.redirect('/products')
+  };
+
+
+  function updateProduct(req, res) {
+    var mysql = req.app.get('mysql');
+    var {product_id, product_name, product_price} = req.body;
+
+    // TODO: data validation
+    mysql.pool.query(selectQuery, [product_id], (error, results, fields) => {
+      var original = results[0];
+      mysql.pool.query(updateQuery, [product_name || original.product_name,
+        product_price || original.product_price], (error, results, fields) => {
+          mysql.pool.query(getQuery, (error, results, fields) => {
+            res.render('products', getProductInputList(results))
+          })
+        })
+    })
+  };
+
+
+  function deleteProduct(req, res) {
+    var mysql = req.app.get('mysql');
+    var productId = req.body.id;
+
+    mysql.pool.query(deleteQuery, productId, (error, results, fields) => {
+      mysql.pool.query(getQuery, (error, results, fields) => {
+        res.render('products', getProductInputList(results))
+      })
+    })
+  };
+
+
+  router.get('/', getProducts)
+  router.post('/insert', insertProduct)
+  router.post('/', searchProduct)
+  router.put('/', updateProduct)
+  router.delete('/', deleteProduct)
+  return router;
+}();

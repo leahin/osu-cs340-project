@@ -2,15 +2,24 @@
 <div class="form">
   <fieldset>
     <legend>Add Customer</legend>
-    <form method="post" class="addForm">
+    {{!-- <form method="post" class="addForm">
       <input type="text" id="customerFName" placeholder="First Name">
       <input type="text" id="customerLName" placeholder="Last Name">
       <input type="text" id="customerBday" placeholder="Birthday">
       <input type="text" id="customerRday" placeholder="Registered Date">
-      <input type="submit" id="addCustomerSubmit" value="Submit">
-    </form>
+      <input type="submit" id="addCustomerSubmit" value="Submit"> --}}
+      <form id="addCustomer" action="/customers" method="post">
+        <input type="text" name="first_name" placeholder="Firt Name">
+        <input type="text" name="last_name" placeholder="Last Name">
+        <input type="text" name="birthdate" placeholder="Birthdate YYYY-MM-DD">
+        <input type="submit" value="Submit">
+      </form>
   </fieldset>
 </div>
+
+
+
+
 
 <!-- Search -->
 <div class="form">

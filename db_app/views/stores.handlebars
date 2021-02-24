@@ -3,15 +3,23 @@
 <div class="form">
   <fieldset>
     <legend>Add Store</legend>
-    <form method="post" class="addForm">
-      <input type="text" id="storeName" placeholder="Store Name">
-      <input type="text" id="storeStreetAddress" placeholder="Street Address">
-      <input type="text" id="storeState" placeholder="State">
-      <input type="text" id="storeZipCode" placeholder="Zip Code">
-      <input type="submit" id="addStoreSubmit" value="Submit">
-    </form>
+
+    {{!-- <form id="addStore" action="/stores" method="post">
+      Store Name: <input type="text" name="store_name">
+      Street Address: <input type="text" name="street_address">
+      State: <input type="text" name="state">
+      Zip Code: <input type="text" name="zip_code">
+      <input type="submit" value="Submit"> --}}
+      <form id="addStore" action="/stores" method="post">
+        <input type="text" name="store_name" placeholder="Store Name">
+        <input type="text" name="street_address" placeholder="Street Address">
+        <input type="text" name="state" placeholder="State">
+        <input type="text" name="zip_code" placeholder="Zip Code">
+        <input type="submit" value="Submit">
+      </form>
   </fieldset>
 </div>
+
 
 <!-- Search data-->
 <div class="form">

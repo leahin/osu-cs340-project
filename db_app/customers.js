@@ -3,6 +3,7 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
+  // Get Customer Data from Server
   function getCustomers(res, mysql, context, complete) {
     mysql.pool.query("SELECT customer_id, first_name, last_name, birthdate FROM abc_customers", function (error, results, fields) {
       if (error) {
@@ -14,7 +15,7 @@ module.exports = function(){
     });
   }
 
-
+// Route Customer Data from Server
   router.get('/', function (req, res) {
     var callbackCount = 0;
     var context = {};
@@ -31,7 +32,23 @@ module.exports = function(){
     }
   });
 
+  // Adds a store to db
 
+  router.post('/', function (req, res) {
+    console.log(req.body)
+    var mysql = req.app.get('mysql');
+    var sql = "INSERT INTO abc_customers (first_name, last_name, birthdate) VALUES (?,?,?)";
+    var inserts = [req.body.first_name, req.body.last_name, req.body.birthdate];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+      if (error) {
+        console.log(JSON.stringify(error))
+        res.write(JSON.stringify(error));
+        res.end();
+      } else {
+        res.redirect('/customers');
+      }
+    });
+  });
 
 
   return router;

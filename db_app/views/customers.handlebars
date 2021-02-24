@@ -43,12 +43,18 @@
   </thead>
   <tbody>
     <!-- Render data here -->
-    {{#each inputList}}
+    {{#each customers}}
       <tr>
-        <td><form id="{{this.id}}">{{this.id}}</form></td>
+        <td>{{customer_id}}</td>
+        <td>{{first_name}}</td>
+        <td>{{last_name}}</td>
+        <td>{{birthdate}}</td>
+
+
+        {{!-- <td><form id="{{this.id}}">{{this.id}}</form></td>
         <td><input form="{{this.id}}" type="text" name="fname" value="{{this.fname}}" disabled></td>
         <td><input form="{{this.id}}" type="text" name="lname" value="{{this.lname}}" disabled></td>
-        <td><input form="{{this.id}}" type="date" name="birthdate" value="{{this.birthdate}}" disabled></td>
+        <td><input form="{{this.id}}" type="date" name="birthdate" value="{{this.birthdate}}" disabled></td> --}}
         <!-- <td><input form="{{this.id}}" type="date" name="birthdate" value="{{this.rDate}}" disabled></td> -->
         <td><button form="{{this.id}}" value="Update">Update</button></td>
         <td><button form="{{this.id}}" value="Delete">Delete</button></td>

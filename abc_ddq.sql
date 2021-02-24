@@ -16,6 +16,7 @@ CREATE TABLE `abc_stores` (
   `zip_code` VARCHAR(5) NOT NULL,
   PRIMARY KEY (`store_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
 -- Dumping Data for stores
 INSERT INTO `abc_stores` VALUES
   (1, 'ABC Downtown Seattle', '500 Pine Street', 'WA', '98101'),
@@ -56,6 +57,8 @@ CREATE TABLE `abc_products` (
   `product_price` DECIMAL(15, 2) NOT NULL,
   PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+
 -- Dumping Data for products
 INSERT INTO `abc_products` VALUES
   (1, 'Bubble', 29.99),
@@ -80,6 +83,8 @@ CREATE TABLE `abc_orders` (
   FOREIGN KEY (`cid`) REFERENCES `Customers` (`customer_id`),
   FOREIGN KEY (`sid`) REFERENCES `Stores` (`store_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+
 -- Dumping Data for orders
 INSERT INTO `abc_orders` VALUES
   (1, 8, 1, '2019-05-07'),
@@ -107,6 +112,8 @@ CREATE TABLE `abc_orders_products` (
   CONSTRAINT CHK_quantity CHECK (quantity > 0),
   CONSTRAINT CHK_total_price CHECK (total_price > 0)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 -- Dumping Data for orders_products
 INSERT INTO `abc_orders_products` VALUES
   (3, 1, 1, 39.99),

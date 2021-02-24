@@ -54,34 +54,33 @@ module.exports = function(){
     });
   });
 
-  //   var dummyData = [
-  //     {id: '1', name: 'Store 1', address: '1111 Store St.', state: 'OR', zipcode: '99999'},
-  //     {id: '2', name: 'Store 2', address: '2222 Store St.', state: 'OR', zipcode: '99999'},
-  //     {id: '3', name: 'Store 3', address: '3333 Store St.', state: 'OR', zipcode: '99999'},
-  //     {id: '3', name: 'Store 345', address: '1231 Store St.', state: 'OR', zipcode: '99999'},
-  //     {id: '3', name: 'Store 345', address: '1231 Store St.', state: 'OR', zipcode: '99999'},
 
-  //   ];
+  router.delete('/:id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    var sql = "DELETE FROM abc_stores WHERE character_id = ?";
+    var inserts = [req.params.id];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+      if (error) {
+        console.log(error)
+        res.write(JSON.stringify(error));
+        res.status(400);
+        res.end();
+      } else {
+        res.status(202).end();
+      }
+    })
+  })
 
-  //   context['inputList'] = dummyData;
-  //   JSON.stringify(context);
-  //   res.render('stores', context);
-  // });
 
 
-  // router.post('/stores', function(req, res){
-  //   // TODO: insert INTO
-  // });
-  //
-  //
-  // router.put('/stores', function(req, res){
-  //   // TODO: update
-  // });
-  //
-  //
-  // router.delete('/stores', function(req, res){
-  //   // TODO: delete
-  // });
+  function searchStores(req, res){
+    var mysql = req.app.get('mysql');
+    var storeName = req.body.storeName;
+    mysql.pool.query(searchQuery, storeName, (error, results, fields) => {
+      res.render('stores', context);
+    })
+  };
 
+  router.post('/', searchStores)
   return router;
 }();

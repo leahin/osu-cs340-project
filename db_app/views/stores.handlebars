@@ -22,15 +22,31 @@
 
 
 <!-- Search data-->
+{{!-- <div class="form">
+  <fieldset>
+    <legend>Search Store</legend>
+
+    <form method="get" class="searchForm">
+      <input type="text" name="store_name" placeholder="Store Name" value=''>
+      <input type="submit" id="searchStoreSubmit" value="Search">
+
+    </form>
+
+  </fieldset>
+</div> --}}
+
+
 <div class="form">
   <fieldset>
     <legend>Search Store</legend>
-    <form method="get" class="searchForm">
-      <input type="text" id="storeNameSearch" placeholder="Store Name">
-      <input type="submit" id="searchStoreSubmit" value="Search">
+    <form method="POST" action="/stores">
+      <input type="text" name="storeName" placeholder="Store Name">
+      <input type="submit" value="Search">
     </form>
   </fieldset>
 </div>
+
+
 
 <!-- read/update/delete data -->
   <table class="table table-striped table-bordered" id="storetable">
@@ -54,8 +70,9 @@
         <td>{{street_address}}</td>
         <td>{{state}}</td>
         <td>{{zip_code}}</td>
+        <td><button onclick="deleteStore({{id}})">Delete</button></td>
         <td><button form="{{this.store_id}}" value="Update">Update</button></td>
-        <td><button form="{{this.store_id}}" value="Delete">Delete</button></td>
+        {{!-- <td><button form="{{this.store_id}}" value="Delete">Delete</button></td> --}}
 
         {{!-- <td><form id="{{this.store_id}}">{{this.store_id}}</form></td>
         <td><input form="{{this.store_id}}" type="text" name="name" value="{{{this.name}}}" disabled></td>

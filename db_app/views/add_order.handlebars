@@ -1,0 +1,39 @@
+<!-- Bootstrap form
+  Date: 2/23/21
+  Copied from
+  Source URL: https://getbootstrap.com/docs/4.0/components/forms/-->
+<h3 style="margin-left: 10px;">Add Order</h3>
+<div class="newWindow">
+  <form id="productOrderAdd">
+    <div class="form-row">
+      <div class="col-7">
+        <label>Store Id</label>
+          <input type="text" class="form-control" name="sid" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-7">
+        <label>Customer Id</label>
+          <input type="text" class="form-control" name="cid" required>
+      </div>
+    </div>
+      <div class="form-row">
+        <div class="col-7">
+          <label>Order Date</label>
+            <input type="date" class="form-control" name="orderDate" required>
+        </div>
+      </div>
+    <div class="form-row">
+      <div class="col">
+        <label>Product Id</label>
+        <input type="text" class="form-control" name="pid" required>
+      </div>
+      <div class="col">
+        <label>Qty</label>
+        <input type="text" class="form-control" name="qty" required>
+      </div>
+    </div>
+  </form><br>
+  <button class="btn btn-primary" id="addProductButton">Add Product</button><br>
+  <button class="btn btn-primary" id="addOrderSubmitButton" type="submit" form="productOrderAdd" style="margin-top:10px">Submit</button>
+</div>

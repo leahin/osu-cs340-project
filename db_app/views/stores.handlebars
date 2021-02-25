@@ -3,13 +3,6 @@
 <div class="form">
   <fieldset>
     <legend>Add Store</legend>
-
-    {{!-- <form id="addStore" action="/stores" method="post">
-      Store Name: <input type="text" name="store_name">
-      Street Address: <input type="text" name="street_address">
-      State: <input type="text" name="state">
-      Zip Code: <input type="text" name="zip_code">
-      <input type="submit" value="Submit"> --}}
       <form id="addStore" action="/stores" method="post">
         <input type="text" name="store_name" placeholder="Store Name">
         <input type="text" name="street_address" placeholder="Street Address">
@@ -22,31 +15,21 @@
 
 
 <!-- Search data-->
-{{!-- <div class="form">
-  <fieldset>
-    <legend>Search Store</legend>
-
-    <form method="get" class="searchForm">
-      <input type="text" name="store_name" placeholder="Store Name" value=''>
-      <input type="submit" id="searchStoreSubmit" value="Search">
-
-    </form>
-
-  </fieldset>
-</div> --}}
-
 
 <div class="form">
+
   <fieldset>
+    <form id='search_store' action='' method=''></form>
     <legend>Search Store</legend>
-    <form method="POST" action="/stores">
-      <input type="text" name="storeName" placeholder="Store Name">
-      <input type="submit" value="Search">
-    </form>
+    <div>
+      <input id='store_name' type='text' placeholder="Store Name" name='store_name' value=''>
+      <input id='state' type='text' name='state' placeholder="State" value=''>
+      <input id="search" type="button" value="Search" onclick="searchStore()">
+
+      </form>
   </fieldset>
+
 </div>
-
-
 
 <!-- read/update/delete data -->
   <table class="table table-striped table-bordered" id="storetable">
@@ -64,7 +47,6 @@
     <tbody>
     {{#each stores}}
       <tr>
-
         <td>{{store_id}}</td>
         <td>{{store_name}}</td>
         <td>{{street_address}}</td>
@@ -72,15 +54,6 @@
         <td>{{zip_code}}</td>
         <td><button onclick="deleteStore({{id}})">Delete</button></td>
         <td><button form="{{this.store_id}}" value="Update">Update</button></td>
-        {{!-- <td><button form="{{this.store_id}}" value="Delete">Delete</button></td> --}}
-
-        {{!-- <td><form id="{{this.store_id}}">{{this.store_id}}</form></td>
-        <td><input form="{{this.store_id}}" type="text" name="name" value="{{{this.name}}}" disabled></td>
-        <td><input form="{{this.store_id}}" type="text" name="address" value="{{this.address}}" disabled></td>
-        <td><input form="{{this.store_id}}" type="text" name="state" value="{{this.state}}" disabled></td>
-        <td><input form="{{this.store_id}}" type="text" name="zipcode" value="{{this.zipcode}}" disabled></td>
-        <td><button form="{{this.store_id}}" value="Update">Update</button></td>
-        <td><button form="{{this.store_id}}" value="Delete">Delete</button></td> --}}
       </tr>
     {{/each}}
 

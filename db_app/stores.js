@@ -70,17 +70,17 @@ module.exports = function () {
   });
 
 
-  router.get('/search/:name', function(req,res){
+  router.get('/search/:name', function(req, res){
     var callbackCount = 0;
     var context = {};
-    context.jsscripts = ["searchStores.js"];
+    context.jsscripts = ["scriptStores.js"];
     console.log(context);
     var mysql = req.app.get('mysql');
-    getSearchStore(req,res,mysql, context,complete);
+    getSearchStore(req,res,mysql, context, complete);
     function complete(){
         callbackCount++;
         if(callbackCount >= 1){
-            res.render('/stores', context);
+            res.render('stores', context);
         }
     }
 

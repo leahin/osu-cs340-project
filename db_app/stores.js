@@ -14,13 +14,10 @@ module.exports = function () {
         }
         console.log(results);
 
-        context.employee = results;
+        context.stores = results;
         complete();
     })
 }
-
-
-
 
 
 
@@ -83,7 +80,7 @@ module.exports = function () {
     function complete(){
         callbackCount++;
         if(callbackCount >= 1){
-            res.render('stores', context);
+            res.render('/stores', context);
         }
     }
 

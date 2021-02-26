@@ -1,11 +1,27 @@
-module.exports = function(){
+module.exports = function () {
   var express = require('express');
   var router = express.Router();
 
-  //router.get('/', function(req, res){
-   // var context = {'title': 'Stores', 'script': 'stores'};
 
-// Get Store Data from DB
+  function getSearchStore(req,res,mysql,context,complete){
+    var sql = "SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE concat(store_name, state) = ?"
+    var inserts = [req.params.name];
+    console.log(inserts);
+    mysql.pool.query(sql, inserts, function(error, results, fields){
+        if(error){
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        console.log(results);
+
+        context.stores = results;
+        complete();
+    })
+}
+
+
+
+  // Get Store Data from DB
 
   function getStores(res, mysql, context, complete) {
     mysql.pool.query("SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores", function (error, results, fields) {
@@ -18,7 +34,7 @@ module.exports = function(){
     });
   }
 
-// Route Store Data from DB
+  // Route Store Data from DB
 
   router.get('/', function (req, res) {
     var callbackCount = 0;
@@ -32,7 +48,6 @@ module.exports = function(){
       if (callbackCount >= 1) {
         res.render('stores', context);
       }
-
     }
   });
 
@@ -55,32 +70,25 @@ module.exports = function(){
   });
 
 
-  router.delete('/:id', function (req, res) {
+  router.get('/search/:name', function(req, res){
+    var callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["scriptStores.js"];
+    console.log(context);
     var mysql = req.app.get('mysql');
-    var sql = "DELETE FROM abc_stores WHERE character_id = ?";
-    var inserts = [req.params.id];
-    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-      if (error) {
-        console.log(error)
-        res.write(JSON.stringify(error));
-        res.status(400);
-        res.end();
-      } else {
-        res.status(202).end();
-      }
-    })
-  })
+    getSearchStore(req,res,mysql, context, complete);
+    function complete(){
+        callbackCount++;
+        if(callbackCount >= 1){
+            res.render('stores', context);
+        }
+    }
+
+})
 
 
 
-  function searchStores(req, res){
-    var mysql = req.app.get('mysql');
-    var storeName = req.body.storeName;
-    mysql.pool.query(searchQuery, storeName, (error, results, fields) => {
-      res.render('stores', context);
-    })
-  };
 
-  router.post('/', searchStores)
+
   return router;
 }();

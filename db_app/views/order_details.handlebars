@@ -15,8 +15,8 @@
       <td><form id="{{this.id}}"><input type="text" name="prodId" value="{{this.prodId}}" disabled></td> <!-- id should be pk for the table, orderId + ProductId -->
       <td><input form="{{this.id}}" type="text" name="qty" value="{{this.qty}}" disabled></td>
       <td>${{this.total_price}}</td>
-      <td><button form="{{this.id}}" name="update" value="{{this.id}}">Update</button></td>
-      <td><button form="{{this.id}}" name="delete" value="{{this.id}}">Delete</button></td>
+      <td><button class="btn btn-primary" form="{{this.id}}" name="update" value="{{this.id}}">Update</button></td>
+      <td><button class="btn btn-primary" form="{{this.id}}" name="delete" value="{{this.id}}">Delete</button></td>
     </tr>
     {{/each}}
     <tr>
@@ -25,4 +25,4 @@
     </tr>
   </tbody>
 </table>
-<button id="closeOrderDetails" style="float:right;">Close</button>
+<button id="closeOrderDetails" class="btn btn-secondary" style="float:right;">Close</button>

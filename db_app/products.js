@@ -7,7 +7,7 @@ module.exports = function(){
   var insertQuery = 'INSERT INTO abc_products (product_name, product_price) VALUES (?, ?)';
   var updateQuery = 'UPDATE abc_products SET product_name = ?, product_price = ? WHERE product_id = ?';
   var deleteQuery = 'DELETE FROM abc_products WHERE product_id = ?';
-
+  var selectQuery = 'SELECT * FROM abc_products WHERE product_id = ?';
 
   function getProductInputList(results){
     var context = {'title': 'Products', 'jsscripts': ['scripts', 'products']};
@@ -19,80 +19,103 @@ module.exports = function(){
       temp['product_id'] = data.product_id;
       temp['product_name'] = data.product_name;
       temp['product_price'] = data.product_price;
-      inputList.push(temp)
+      inputList.push(temp);
     };
 
     context['inputList'] = inputList;
-    JSON.stringify(context)
-
+    JSON.stringify(context);
     return context;
   };
-
 
   function getProducts(req, res){
     var mysql = req.app.get('mysql');
 
     mysql.pool.query(getQuery, (error, results, fields) => {
-      res.render('products', getProductInputList(results))
-    })
+      if (error) {
+        console.log("DB getProducts Error: " + error);
+        res.send(error);
+        return;
+      }
+      res.render('products', getProductInputList(results));
+    });
   };
-
 
   function searchProduct(req, res){
     var mysql = req.app.get('mysql');
     var productName = req.body.productName;
 
     mysql.pool.query(searchQuery, productName, (error, results, fields) => {
-      res.render('products', getProductInputList(results))
-    })
+      if (error) {
+        console.log("DB searchProduct Error: " + error);
+        res.send(error);
+        return;
+      };
+      res.render('products', getProductInputList(results));
+    });
   };
-
 
   function insertProduct(req, res){
     var mysql = req.app.get('mysql');
     var {productName, productPrice} = req.body;
 
-    // TODO: user input validation
-    if (productName === ""){
+    if (productName.trim() === ""){
+      res.send("Please Enter a Valid Product Name.");
+      return;
+    };
+    if (productPrice <= 0 || isNaN(productPrice)) {
+      res.send("Please Enter a Valid Product Price.");
+      return;
+    };
 
-    }
-    if (productPrice <= 0) {
-
-    }
-
-    mysql.pool.query (insertQuery, [productName, productPrice])
-    res.redirect('/products')
+    mysql.pool.query (insertQuery, [productName, productPrice], (error) => {
+      if (error) {
+        console.log("DB insertProduct Error: " + error);
+        res.send(error);
+        return;
+      };
+      res.redirect('/products');
+    });
   };
-
 
   function updateProduct(req, res) {
     var mysql = req.app.get('mysql');
     var {product_id, product_name, product_price} = req.body;
+    console.log(req.body);
 
-    // TODO: data validation
-    mysql.pool.query(selectQuery, [product_id], (error, results, fields) => {
-      var original = results[0];
-      mysql.pool.query(updateQuery, [product_name || original.product_name,
-        product_price || original.product_price], (error, results, fields) => {
-          mysql.pool.query(getQuery, (error, results, fields) => {
-            res.render('products', getProductInputList(results))
-          })
-        })
-    })
+    // TODO: product price validation & input
+    if (product_name.trim() === ""){
+      res.send("Please Enter a Valid Product Name.");
+      return;
+    };
+    if (product_price <= 0) {
+      console.log("hello product_price")
+      res.send("Please Enter a Valid Product Price.");
+      return;
+    };
+
+    mysql.pool.query(updateQuery, [product_name, product_price, product_id], (error) => {
+      if(error){
+        console.log("DB updateProduct Error: " + error);
+        res.send(error);
+        return;
+      };
+      //res.redirect('/products');
+    });
   };
-
 
   function deleteProduct(req, res) {
     var mysql = req.app.get('mysql');
     var productId = req.body.id;
 
-    mysql.pool.query(deleteQuery, productId, (error, results, fields) => {
-      mysql.pool.query(getQuery, (error, results, fields) => {
-        res.render('products', getProductInputList(results))
-      })
-    })
+    mysql.pool.query(deleteQuery, productId, (error) => {
+      if (error) {
+        console.log("DB deleteProduct Error: " + error);
+        res.send(error);
+        return;
+      }
+      res.redirect('/products');
+    });
   };
-
 
   router.get('/', getProducts)
   router.post('/insert', insertProduct)

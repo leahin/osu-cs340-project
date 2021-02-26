@@ -2,10 +2,12 @@
 <div class="form">
   <fieldset>
     <legend>Add Product</legend>
+    <p>Product Name should not be empty or white spaces.<br>
+    Product Price must be a non-zero, positive number.</p>
     <form method="POST" action="/products/insert">
       <input type="text" name="productName" placeholder="Product Name" required>
       <input type="text" name="productPrice" placeholder="Price" required>
-      <input type="submit" value="Submit">
+      <input class="btn btn-primary btn-sm" type="submit" value="Submit">
     </form>
   </fieldset>
 </div>
@@ -16,7 +18,7 @@
     <legend>Search Product</legend>
     <form method="POST" action="/products">
       <input type="text" name="productName" placeholder="Product Name">
-      <input type="submit" value="Search">
+      <input class="btn btn-primary btn-sm" type="submit" value="Search">
     </form>
   </fieldset>
 </div>
@@ -38,8 +40,8 @@
         <td><form id="{{this.product_id}}">{{this.product_id}}</form></td>
         <td><input form="{{this.product_id}}" type="text" class="input{{this.product_id}}" name="name" value="{{this.product_name}}" disabled required></td>
         <td><input form="{{this.product_id}}" type="text" class="input{{this.product_id}}" name="price" value="{{this.product_price}}" disabled required></td>
-        <td><button form="{{this.product_id}}" class="input{{this.product_id}}" name="update" value="{{this.product_id}}">Update</button></td>
-        <td><button form="{{this.product_id}}" name="delete" value="{{this.product_id}}">Delete</button></td>
+        <td><button form="{{this.product_id}}" class="btn btn-primary input{{this.product_id}}" name="update" value="{{this.product_id}}">Update</button></td>
+        <td><button form="{{this.product_id}}" class="btn btn-primary" name="delete" value="{{this.product_id}}">Delete</button></td>
       </tr>
     {{/each}}
     </tbody>

@@ -1,35 +1,35 @@
 navCurrent("navProducts");
 
 const productTable = document.getElementById("productTable");
-productTable.onclick = function(event) {
+productTable.onclick = function(event){
   var target = event.target;
+
   if (target.name == 'delete'){
     requestDelete(event, target.value)
   };
-  if (target.name == 'update'){
 
+  if (target.name == 'update'){
     var inputElements = document.getElementsByClassName("input" + target.value);
     var nameInput = inputElements[0];
     var priceInput = inputElements[1];
     var updateButton = inputElements[2];
-
     nameInput.disabled = false;
     priceInput.disabled = false;
-    event.preventDefault()
+    event.preventDefault();
 
-    // TODO: to be fixed
     updateButton.textContent = 'Submit';
-    updateButton.style = "background-color: skyblue;"
-    updateButton.onclick = function(event) {
+    updateButton.setAttribute('class', "btn btn-info input" + target.value);
+    updateButton.addEventListener('click', (event) => {
       var inputs = {};
       inputs['product_id'] = target.value;
       inputs['product_name'] = target.form.name.value;
-      inputs['product_price'] = target.form.price.value;
-
-      // requestPut(event, inputs)
-    };
-  }
-};
+      inputs['priduct_price'] = target.form.price.value;
+      // console.log(inputs);
+      requestPut(event, inputs);
+      window.location.reload();
+    });
+  };
+}
 
 function requestDelete(event, id){
   var req = new XMLHttpRequest();

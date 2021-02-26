@@ -2,7 +2,7 @@
 <div class="form">
   <fieldset>
     <legend>Add Order</legend>
-    <a href="" onclick="openAddOrder()">Click here to add an order.</a>
+    <a href="" class="btn btn-link" onclick="openAddOrder()">Click here to add a new order.</a>
   </fieldset>
 </div>
 
@@ -10,15 +10,17 @@
 <div class="form">
   <fieldset>
     <legend>Search Order</legend>
+    <p>Enter at least one search option below.</p>
     <form method="POST">
       <input type="text" name="orderId" placeholder="Order Id">
-      <input type="submit" value="submit">
+      <input type="text" name="custId" placeholder="Customer Id">
+      <input type="text" name="storeId" placeholder="Store Id">
+      <input class="btn btn-primary btn-sm" type="submit" value="Submit">
     </form>
   </fieldset>
 </div>
 
 <!-- read/update/delete data -->
-<p><b>Click 'Order Details' to edit the order.</b></p>
 <table class="table table-striped table-bordered" id="orderTable">
   <thead>
     <tr>
@@ -28,17 +30,19 @@
       <th>Order Date</th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     {{#each inputList}}
       <tr>
-        <td>{{this.order_id}}</td>
-        <td>{{this.cid}}</td>
-        <td>{{this.sid}}</td>
-        <td>{{this.order_date}}</td>
-        <td><button name="details" value="{{this.order_id}}">Order Details</td>
-        <td><button name="delete" value="{{this.order_id}}">Delete</td>
+        <td><form id="{{this.order_id}}">{{this.order_id}}</form></td>
+        <td><input from="{{this.order_id}}" type="text" name="cid" value="{{this.cid}}" disabled></td>
+        <td><input form="{{this.order_id}}" type="text" name="sid" value="{{this.sid}}" disabled></td>
+        <td><input form="{{this.order_id}}" type="date" name="orderDate" value="{{this.order_date}}" disabled></td>
+        <td><button class="btn btn-info" name="details" value="{{this.order_id}}">Order Details</td>
+        <td><button class="btn btn-primary" name="update" value="{{this.order_id}}">Update</td>
+        <td><button class="btn btn-primary" name="delete" value="{{this.order_id}}">Delete</td>
       </tr>
     {{/each}}
   </tbody>

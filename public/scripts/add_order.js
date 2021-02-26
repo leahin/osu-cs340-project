@@ -4,6 +4,17 @@ addProductButton.addEventListener('click', addProduct)
 const addOrderSubmitButton = document.getElementById("addOrderSubmitButton");
 addOrderSubmitButton.addEventListener('click', addOrder)
 
+const deleteProductButton = document.getElementById("deleteProductButton");
+deleteProductButton.addEventListener('click', deleteProduct)
+
+document.getElementById("closeWindowButton").addEventListener('click', (event) => {
+  window.close();
+})
+
+var productRowCounter = 1;
+
+defaultOrderDate();
+
 function addProduct(event){
   var form = document.getElementById("productOrderAdd");
 
@@ -37,8 +48,20 @@ function addProduct(event){
   div2.appendChild(input2);
   div0.appendChild(div2);
 
+  productRowCounter += 1;
+
   event.preventDefault();
 };
+
+function deleteProduct(event){
+  if (productRowCounter < 2) {
+    return;
+  }
+  productRowCounter -= 1;
+  var targetNodeGroup = document.getElementsByClassName('form-row');
+  var targetNode = targetNodeGroup[targetNodeGroup.length - 1];
+  document.getElementById("productOrderAdd").removeChild(targetNode);
+}
 
 function addOrder(event){
   var req = new XMLHttpRequest();
@@ -63,5 +86,21 @@ function addOrder(event){
 
   window.opener.location.reload(false);
   window.close();
-
 };
+
+function defaultOrderDate() {
+  var orderDateNode = document.getElementsByName("orderDate")[0];
+  console.log(orderDateNode)
+  var currentDate = new Date();
+  var year = currentDate.getFullYear();
+  var month = (currentDate.getMonth() + 1).toString();
+  var date = currentDate.getDate().toString();
+  if (month.length < 2) {
+    month = '0' + month;
+  }
+  if (date.length < 2) {
+    date = '0' + date;
+  }
+  currentDate = year + '-' + month + '-' + date;
+  orderDateNode.setAttribute('value', currentDate);
+}

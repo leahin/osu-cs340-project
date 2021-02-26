@@ -7,14 +7,14 @@
   <form id="productOrderAdd">
     <div class="form-row">
       <div class="col-7">
-        <label>Store Id</label>
-          <input type="text" class="form-control" name="sid" required>
+        <label>Customer Id</label>
+          <input type="text" class="form-control" name="cid" required>
       </div>
     </div>
     <div class="form-row">
       <div class="col-7">
-        <label>Customer Id</label>
-          <input type="text" class="form-control" name="cid" required>
+        <label>Store Id</label>
+          <input type="text" class="form-control" name="sid" required>
       </div>
     </div>
       <div class="form-row">
@@ -34,6 +34,8 @@
       </div>
     </div>
   </form><br>
-  <button class="btn btn-primary" id="addProductButton">Add Product</button><br>
+  <button class="btn btn-primary" id="addProductButton">Add Product</button>
+  <button class="btn btn-primary" id="deleteProductButton">Delete Product</button><br>
   <button class="btn btn-primary" id="addOrderSubmitButton" type="submit" form="productOrderAdd" style="margin-top:10px">Submit</button>
 </div>
+<button class="btn btn-secondary" id="closeWindowButton" style="float:right; margin-right:10px;">Close</button>

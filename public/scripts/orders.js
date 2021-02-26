@@ -1,15 +1,12 @@
 navCurrent("navOrders");
 
-const productTable = document.getElementById("orderTable");
-productTable.onclick = function(event) {
-  var target = event.target;
-  if (target.name == 'delete'){
-    requestDelete(event, target.value)
-  };
-  if (target.name == 'details'){
-    requestDetail(event, target.value)
-  }
-};
+function openAddOrder(event){
+  window.open('orders/add_order', "_blank", "width=380px, height=600px");
+}
+
+function requestDetail(event, id){
+  window.open('orders/order_details/' + id, "_blank", "width=1000px, height=500px");
+}
 
 function requestDelete(event, id){
   var req = new XMLHttpRequest();
@@ -19,10 +16,21 @@ function requestDelete(event, id){
   req.send(JSON.stringify(targetId));
 }
 
-function requestDetail(event, id){
-  window.open('orders/order_details/' + id, "_blank", "width=1000px, height=500px");
+function requestUpdate(event, id){
+  // TODO
 }
 
-function openAddOrder(event){
-  window.open('orders/add_order', "_blank", "width=500px, height=800px");
-}
+const productTable = document.getElementById("orderTable");
+productTable.onclick = function(event) {
+  var target = event.target;
+  if (target.name == 'details') {
+    requestDetail(event, target.value);
+  }
+  if (target.name == 'delete') {
+    requestDelete(event, target.value);
+  };
+  if (target.name == 'update') {
+    // TODO
+    // requestUpdate(event, target.value)
+  }
+};

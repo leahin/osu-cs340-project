@@ -3,13 +3,13 @@ module.exports = function(){
   var router = express.Router();
 
   var getQuery = 'SELECT * FROM abc_orders ORDER BY order_id DESC';
-  var searchQuery = 'SELECT * FROM abc_orders WHERE order_id = ? ORDER BY order_id DESC';
+  var searchQuery = 'SELECT * FROM abc_orders WHERE ';
   var deleteQuery = 'DELETE FROM abc_orders WHERE order_id = ?';
   var getOrderDetailsQuery = 'SELECT op.oid, op.pid, op.quantity, op.total_price FROM abc_orders_products AS op \
                             INNER JOIN abc_products AS p ON op.pid = p.product_id \
                             WHERE op.oid = ? ORDER BY op.pid';
   var insertOrder = 'INSERT INTO abc_orders (`cid`, `sid`, `order_date`) VALUES (?, ?, ?)';
-  var getLastOrderId = 'SELECT order_id FROM abc_orders ORDER BY order_id DESC';
+  var getLastOrderId = 'SELECT order_id FROM abc_orders ORDER BY order_id DESC LIMIT 1';
   var insertOrderProduct = 'INSERT INTO abc_orders_products (`pid`, `oid`, `quantity`, `total_price`) \
                             VALUES (?, ?, ?, ?)';
   var getUnitPrice = 'SELECT product_price FROM abc_products WHERE product_id = ?';
@@ -35,7 +35,7 @@ module.exports = function(){
       if (date.length < 2){
         date = '0' + date;
       };
-      temp['order_date'] = month + "/" + date + "/" + year;
+      temp['order_date'] = year + "-" + month + "-" + date;
 
       inputList.push(temp)
     };
@@ -57,21 +57,54 @@ module.exports = function(){
   function searchOrder(req, res){
     var mysql = req.app.get('mysql');
     var orderId = req.body.orderId;
+    var storeId = req.body.storeId;
+    var custId = req.body.custId;
+    var userInputs = [];
+    var queryPartial = [];
 
-    mysql.pool.query(searchQuery, orderId, (error, results, fields) => {
-      res.render('orders', getOrderInputList(results))
-    })
+    if (orderId.trim() !== "") {
+      userInputs.push(orderId);
+      queryPartial.push('order_id = ?');
+    }
+    if (storeId.trim() !== "") {
+      userInputs.push(storeId);
+      queryPartial.push('sid = ?');
+    }
+    if (custId.trim() !== "") {
+      userInputs.push(custId);
+      queryPartial.push('cid = ?');
+    }
+
+    var condition = userInputs.length;
+    if (condition > 1){
+      searchQuery += queryPartial.shift();
+      queryPartial.forEach(q => searchQuery += " AND " + q)
+    } else if (condition == 1){
+      searchQuery += queryPartial[0];
+    } else {
+        res.send("Error: No User Inputs.")
+        return;
+    }
+
+    mysql.pool.query(searchQuery, userInputs, (error, results, fields) => {
+      if(error) res.send(error);
+      else {
+        res.render('orders', getOrderInputList(results));
+        searchQuery = 'SELECT * FROM abc_orders WHERE ';
+    }})
   }
 
-  function deleteOrder(req, res){
+  async function deleteOrder(req, res){
     var mysql = req.app.get('mysql');
     var orderId = req.body.id;
 
-    mysql.pool.query(deleteQuery, orderId, (error, results, fields) =>{
-      mysql.pool.query(getQuery, (error, results,fields) =>{
+    await mysql.pool.query(deleteQuery, orderId, (error) => {
+      if (error) res.send(error);
+    });
+
+    await mysql.pool.query(getQuery, (error, results, fields) => {
         res.render('orders', getOrderInputList(results))
-      })
-    })
+    });
   }
 
   function getOrderDetails(req, res){
@@ -111,33 +144,41 @@ module.exports = function(){
     res.render('add_order', context);
   }
 
-  function addOrderInsert(req, res){
+  async function addOrderInsert(req, res){
     var mysql = req.app.get('mysql');
+
     var cid = req.body.cid;
     var sid = req.body.sid;
     var order_date = req.body.orderDate;
     var pids = req.body.pid;
     var qtys = req.body.qty;
 
-    mysql.pool.query(insertOrder, [cid, sid, order_date]);
-    mysql.pool.query(getLastOrderId, (error, results, fields) => {
-      var oid = results[0].order_id;
+    mysql.pool.query(insertOrder, [cid, sid, order_date], (error) => {
+      if (error) console.log(error);
+    })
 
-      function addOrderProduct(pid, quantity){
-        mysql.pool.query(getUnitPrice, pid, (error, results, fields) =>{
-          var total_price = quantity*results[0].product_price;
-          mysql.pool.query(insertOrderProduct, [pid, oid, quantity, total_price], (error) =>{
-            if(error) console.log(error);
+    function addOrderInsertHelper (pid, quantity) {
+      mysql.pool.query(getUnitPrice, pid, (error, results, fields) => {
+        if (error) console.log(error);
+        var total_price = quantity * results[0].product_price;
+
+        mysql.pool.query(getLastOrderId, (error, results, fields) => {
+          if (error) console.log(error);
+          var oid = results[0].order_id;
+
+          mysql.pool.query(insertOrderProduct, [pid, oid, quantity, total_price], (error) => {
+            if (error) console.log(error);
           })
         })
-      }
+      })
+    }
 
-      for (i = 0; i < pids.length; i++){
-        var pid = pids[i];
-        var quantity = qtys[i];
-        addOrderProduct(pid, quantity);
-      };
-    });
+    for (i = 0; i < pids.length; i ++) {
+      var pid = pids[i];
+      var quantity = qtys[i];
+      await addOrderInsertHelper(pid, quantity);
+    }
+
     res.redirect('/add_order');
   }
 

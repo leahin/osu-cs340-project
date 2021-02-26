@@ -30,6 +30,13 @@
   </fieldset>
 
 </div>
+<script>
+  function searchStore() {
+    var storeName = document.getElementById('store_name').value + document.getElementById('state').value;
+    window.location = '/stores/search/' + encodeURI(storeName); 
+  }
+</script>
+
 
 <!-- read/update/delete data -->
   <table class="table table-striped table-bordered" id="storetable">

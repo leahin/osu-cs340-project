@@ -2,12 +2,11 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
-  var getQuery = 'SELECT * FROM abc_products ORDER BY product_id DESC';
-  var searchQuery = 'SELECT * FROM abc_products WHERE product_name = ? ORDER BY product_id DESC';
+  var getQuery = 'SELECT * FROM abc_products';
+  var searchQuery = 'SELECT * FROM abc_products WHERE product_name = ?';
   var insertQuery = 'INSERT INTO abc_products (product_name, product_price) VALUES (?, ?)';
   var updateQuery = 'UPDATE abc_products SET product_name = ?, product_price = ? WHERE product_id = ?';
   var deleteQuery = 'DELETE FROM abc_products WHERE product_id = ?';
-  var selectQuery = 'SELECT * FROM abc_products WHERE product_id = ?';
 
   function getProductInputList(results){
     var context = {'title': 'Products', 'jsscripts': ['scripts', 'products']};
@@ -18,7 +17,8 @@ module.exports = function(){
       var temp = {};
       temp['product_id'] = data.product_id;
       temp['product_name'] = data.product_name;
-      temp['product_price'] = data.product_price;
+      temp['product_price'] = data.product_price.toFixed(2);
+
       inputList.push(temp);
     };
 
@@ -68,7 +68,7 @@ module.exports = function(){
     };
 
     mysql.pool.query (insertQuery, [productName, productPrice], (error) => {
-      if (error) {
+    if (error) {
         console.log("DB insertProduct Error: " + error);
         res.send(error);
         return;
@@ -80,9 +80,7 @@ module.exports = function(){
   function updateProduct(req, res) {
     var mysql = req.app.get('mysql');
     var {product_id, product_name, product_price} = req.body;
-    console.log(req.body);
 
-    // TODO: product price validation & input
     if (product_name.trim() === ""){
       res.send("Please Enter a Valid Product Name.");
       return;
@@ -99,7 +97,7 @@ module.exports = function(){
         res.send(error);
         return;
       };
-      //res.redirect('/products');
+      res.redirect('/products');
     });
   };
 

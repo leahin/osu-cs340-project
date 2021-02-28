@@ -5,7 +5,7 @@ productTable.onclick = function(event){
   var target = event.target;
 
   if (target.name == 'delete'){
-    requestDelete(event, target.value)
+    requestDelete(event, target.value);
   };
 
   if (target.name == 'update'){
@@ -19,14 +19,14 @@ productTable.onclick = function(event){
 
     updateButton.textContent = 'Submit';
     updateButton.setAttribute('class', "btn btn-info input" + target.value);
-    updateButton.addEventListener('click', (event) => {
+    updateButton.addEventListener('click', async (event) => {
       var inputs = {};
       inputs['product_id'] = target.value;
       inputs['product_name'] = target.form.name.value;
-      inputs['priduct_price'] = target.form.price.value;
+      inputs['product_price'] = target.form.price.value;
       // console.log(inputs);
-      requestPut(event, inputs);
-      window.location.reload();
+      await requestPut(event, inputs);
+      await window.location.reload();
     });
   };
 }

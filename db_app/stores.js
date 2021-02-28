@@ -3,21 +3,21 @@ module.exports = function () {
   var router = express.Router();
 
 
-  function getSearchStore(req,res,mysql,context,complete){
-    var sql = "SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE concat(store_name, state) = ?"
-    var inserts = [req.params.name];
-    console.log(inserts);
-    mysql.pool.query(sql, inserts, function(error, results, fields){
-        if(error){
-            res.write(JSON.stringify(error));
-            res.end();
-        }
-        console.log(results);
+//   function getSearchStore(req,res,mysql,context,complete){
+//     var sql = "SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE concat(store_name, state) = ?"
+//     var inserts = [req.params.name];
+//     console.log(inserts);
+//     mysql.pool.query(sql, inserts, function(error, results, fields){
+//         if(error){
+//             res.write(JSON.stringify(error));
+//             res.end();
+//         }
+//         console.log(results);
 
-        context.stores = results;
-        complete();
-    })
-}
+//         context.stores = results;
+//         complete();
+//     })
+// }
 
 
 
@@ -70,21 +70,21 @@ module.exports = function () {
   });
 
 
-  router.get('/search/:name', function(req, res){
-    var callbackCount = 0;
-    var context = {};
-    context.jsscripts = ["scriptStores.js"];
-    console.log(context);
-    var mysql = req.app.get('mysql');
-    getSearchStore(req,res,mysql, context, complete);
-    function complete(){
-        callbackCount++;
-        if(callbackCount >= 1){
-            res.render('stores', context);
-        }
-    }
+//   router.get('/search/:name', function(req, res){
+//     var callbackCount = 0;
+//     var context = {};
+//     context.jsscripts = ["scriptStores.js"];
+//     console.log(context);
+//     var mysql = req.app.get('mysql');
+//     getSearchStore(req,res,mysql, context, complete);
+//     function complete(){
+//         callbackCount++;
+//         if(callbackCount >= 1){
+//             res.render('stores', context);
+//         }
+//     }
 
-})
+// })
 
 
 

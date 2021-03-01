@@ -1,0 +1,13 @@
+<html>
+<h1>Update {{abc_stores.store_name}} {{abc_stores.store_address}}:</h1>
+<form id="update-store" action="/stores" method="post">
+    Store Name: <input type="text" name="storeName" value="{{abc_stores.store_name}}"><br>
+    Store Address: <input type="text" name="storeAddress" value="{{abc_stores.store_address}}"><br>
+    State: <input type="text" name="state" value="{{abc_stores.state}}"><br>
+    Zip Code: <input type="number" name="zipCode" value="{{abc_stores.zip_code}}"><br>
+
+
+</form>
+<button onclick="updateStore({{store.id}})">Update</button>
+</html>
+

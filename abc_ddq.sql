@@ -78,7 +78,7 @@ CREATE TABLE `abc_orders` (
   `order_id` INT(11) AUTO_INCREMENT NOT NULL,
   `cid` INT(11) NULL,
   `sid` INT(11) NULL,
-  `order_date` date NOT NULL DEFAULT CURRENT_DATE(),
+  `order_date` date DEFAULT CURRENT_DATE(),
   PRIMARY KEY (`order_id`),
   FOREIGN KEY (`cid`) REFERENCES `abc_customers` (`customer_id`)
     ON DELETE SET NULL,
@@ -104,7 +104,7 @@ INSERT INTO `abc_orders` VALUES
 -- Create Orders_products Table
 CREATE TABLE `abc_orders_products` (
   `pid` INT(11) NULL,
-  `oid` INT(11),
+  `oid` INT(11) NULL,
   `quantity` TINYINT(1) NOT NULL,
   `total_price` DECIMAL(15, 2) NOT NULL,
   FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`)

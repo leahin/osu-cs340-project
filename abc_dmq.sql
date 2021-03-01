@@ -40,6 +40,7 @@ WHERE customer_id = custId;
 -- 4. delete
 DELETE FROM `abc_customer` WHERE customer_id = :custId;
 
+
 -- [products]
 -- 1. read
 SELECT * FROM `abc_products`;
@@ -62,9 +63,13 @@ DELETE FROM `abc_products` WHERE product_id=:productId;
 
 -- [orders]
 -- 1. read
-SELECT * FROM `abc_orders`;
--- filters
+SELECT * FROM `abc_orders` ORDER BY order_id DESC;
+-- filters (order Id, customer id, store id or mixed.)
 SELECT * FROM `abc_orders` WHERE order_id=:orderId;
+SELECT * FROM `abc_orders` WHERE cid=:custId;
+SELECT * FROM `abc_orders` WHERE sid=:storeId;
+SELECT * FROM `abc_orders` WHERE cid=:custId AND sid=:storeId;
+-- WHERE order_id AND ... possible but because there are only 1 order_id, this query is not meaningful.
 
 -- 2. add
 INSERT INTO `abc_orders` (cid, sid, order_date)
@@ -81,21 +86,36 @@ DELETE FROM `abc_orders` WHERE order_id=:orderId;
 -- 1. read
 SELECT * FROM `abc_orders_products` WHERE oid=:olderId;
 
+-- 1-1. order_details read query
+SELECT op.oid, op.pid, p.product_name, op.quantity, op.total_price FROM `abc_orders_products` AS op
+INNER JOIN `abc_products` as p ON op.pid = p.product_id
+WHERE op.oid = ? ORDER BY op.pid;
+
 -- 2. add
 INSERT INTO `abc_orders_products` (pid, oid, quantity, total_price)
 VALUES (:productId, :olderId, :quantity, :totalPrice_unit_times_quantity);
 
+-- UPDATED: update/delete is not possible withoout a primary key. entires with the same values will be updated/deleted simultaneously.
+
 -- 3. update
-UPDATE `abc_orders_products` SET pid=:productId, oid=:orderId, quantity=:quantity, total_price=:totalPrice_unit_times_quantity
-WHERE oid=:olderId AND pid=:productId;
+--UPDATE `abc_orders_products` SET pid=:productId, oid=:orderId, quantity=:quantity, total_price=:totalPrice_unit_times_quantity
+--WHERE oid=:olderId AND pid=:productId;
 
 -- 4. delete
-DELETE FROM `abc_orders_products` WHERE oid=:orderId AND pid=:productId;
+--DELETE FROM `abc_orders_products` WHERE oid=:orderId AND pid=:productId;
 
 
 -- Sales
-SELECT s.store_id, s.store_name, SUM(op.total_price) AS total_sales FROM abc_orders_products AS op
-INNER JOIN abc_orders AS o ON op.oid = o.order_id
-INNER JOIN abc_stores AS s ON o.sid = s.store_id
+SELECT s.store_id, s.store_name, SUM(op.total_price) AS total_sales FROM `abc_orders_products` AS op
+INNER JOIN `abc_orders` AS o ON op.oid = o.order_id
+INNER JOIN `abc_stores` AS s ON o.sid = s.store_id
+GROUP BY s.store_id
+ORDER BY total_sales DESC;
+
+-- Sales filter (start date and end date inclusive)
+SELECT s.store_id, s.store_name, SUM(op.total_price) AS total_sales FROM `abc_orders_products` AS op
+INNER JOIN `abc_orders` AS o ON op.oid = o.order_id
+INNER JOIN `abc_stores` AS s ON o.sid = s.store_id
+WHERE o.order_date BETWEEN :startDate AND :endDate
 GROUP BY s.store_id
 ORDER BY total_sales DESC;

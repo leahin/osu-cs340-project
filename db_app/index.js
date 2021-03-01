@@ -33,6 +33,7 @@ app.use('/customers', require('./customers'));
 app.use('/sales', require('./sales'));
 app.use('/stores_products', require('./stores_products'));
 app.use('/customers_products', require('./customers_products'));
+app.use('/orders_products', require('./orders_products'));
 app.use(express.static('../public'));
 
 app.get('/', function(req, res){

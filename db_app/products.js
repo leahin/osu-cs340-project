@@ -8,6 +8,7 @@ module.exports = function(){
   var updateQuery = 'UPDATE abc_products SET product_name = ?, product_price = ? WHERE product_id = ?';
   var deleteQuery = 'DELETE FROM abc_products WHERE product_id = ?';
 
+  // READ Products helper function
   function getProductInputList(results){
     var context = {'title': 'Products', 'jsscripts': ['scripts', 'products']};
     var inputList = [];
@@ -27,6 +28,7 @@ module.exports = function(){
     return context;
   };
 
+  // READ Products
   function getProducts(req, res){
     var mysql = req.app.get('mysql');
 
@@ -40,9 +42,15 @@ module.exports = function(){
     });
   };
 
+  // Filter Products
   function searchProduct(req, res){
     var mysql = req.app.get('mysql');
     var productName = req.body.productName;
+
+    if (productName.trim() === ""){
+      res.send("ERROR: No User Input.");
+      return;
+    }
 
     mysql.pool.query(searchQuery, productName, (error, results, fields) => {
       if (error) {
@@ -54,16 +62,16 @@ module.exports = function(){
     });
   };
 
+  // CREATE Products
   function insertProduct(req, res){
     var mysql = req.app.get('mysql');
     var {productName, productPrice} = req.body;
 
+    // User input validation.
     if (productName.trim() === ""){
-      res.send("Please Enter a Valid Product Name.");
       return;
     };
     if (productPrice <= 0 || isNaN(productPrice)) {
-      res.send("Please Enter a Valid Product Price.");
       return;
     };
 
@@ -77,6 +85,7 @@ module.exports = function(){
     });
   };
 
+  // Update Products
   function updateProduct(req, res) {
     var mysql = req.app.get('mysql');
     var {product_id, product_name, product_price} = req.body;
@@ -85,8 +94,7 @@ module.exports = function(){
       res.send("Please Enter a Valid Product Name.");
       return;
     };
-    if (product_price <= 0) {
-      console.log("hello product_price")
+    if (product_price <= 0 || isNaN(product_price)) {
       res.send("Please Enter a Valid Product Price.");
       return;
     };
@@ -101,6 +109,7 @@ module.exports = function(){
     });
   };
 
+  // DELETE Products
   function deleteProduct(req, res) {
     var mysql = req.app.get('mysql');
     var productId = req.body.id;

@@ -1,5 +1,6 @@
 navCurrent("navProducts");
 
+// product table event for request update/delete.
 const productTable = document.getElementById("productTable");
 productTable.onclick = function(event){
   var target = event.target;
@@ -19,18 +20,26 @@ productTable.onclick = function(event){
 
     updateButton.textContent = 'Submit';
     updateButton.setAttribute('class', "btn btn-info input" + target.value);
-    updateButton.addEventListener('click', async (event) => {
+    updateButton.addEventListener('click', (event) => {
       var inputs = {};
       inputs['product_id'] = target.value;
+
       inputs['product_name'] = target.form.name.value;
+      if (target.form.name.value.trim() === ""){
+        alert("Please Enter a Valid Product Name.");
+      };
       inputs['product_price'] = target.form.price.value;
+      if (target.form.price.value <= 0 || isNaN(target.form.price.value)){
+        alert("Please Enter a Valid Product Price.");
+      };
       // console.log(inputs);
-      await requestPut(event, inputs);
-      await window.location.reload();
+      requestPut(event, inputs);
+      window.location.reload();
     });
   };
 }
 
+// sending delete request
 function requestDelete(event, id){
   var req = new XMLHttpRequest();
   req.open('DELETE', '/products')
@@ -38,6 +47,7 @@ function requestDelete(event, id){
   req.send(JSON.stringify({id: id}));
 }
 
+// sending update request
 function requestPut(event, inputs){
   var req = new XMLHttpRequest();
   req.open('PUT', '/products')

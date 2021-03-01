@@ -10,16 +10,15 @@
 <div class="form">
   <fieldset>
     <legend>Search Order</legend>
-    <p>Enter at least one search option below.</p>
     <form method="POST">
       <input type="text" name="orderId" placeholder="Order Id">
       <input type="text" name="custId" placeholder="Customer Id">
       <input type="text" name="storeId" placeholder="Store Id">
-      <input class="btn btn-primary btn-sm" type="submit" value="Submit">
+      <input class="btn btn-secondary btn-sm" type="submit" value="Submit">
     </form>
   </fieldset>
 </div>
-
+<p> Note: to enter a null value, enter 'Not Available'. Both Customer Id and Store Id are Nullable.</p>
 <!-- read/update/delete data -->
 <table class="table table-striped table-bordered" id="orderTable">
   <thead>
@@ -37,11 +36,11 @@
     {{#each inputList}}
       <tr>
         <td><form id="{{this.order_id}}">{{this.order_id}}</form></td>
-        <td><input from="{{this.order_id}}" type="text" name="cid" value="{{this.cid}}" disabled></td>
-        <td><input form="{{this.order_id}}" type="text" name="sid" value="{{this.sid}}" disabled></td>
-        <td><input form="{{this.order_id}}" type="date" name="orderDate" value="{{this.order_date}}" disabled></td>
+        <td><input form="{{this.order_id}}" class="input{{this.order_id}}" type="text" name="cid" value="{{this.cid}}" disabled></td>
+        <td><input form="{{this.order_id}}" class="input{{this.order_id}}" type="text" name="sid" value="{{this.sid}}" disabled></td>
+        <td><input form="{{this.order_id}}" class="input{{this.order_id}}" type="date" name="orderDate" value="{{this.order_date}}" disabled></td>
         <td><button class="btn btn-info" name="details" value="{{this.order_id}}">Order Details</td>
-        <td><button class="btn btn-primary" name="update" value="{{this.order_id}}">Update</td>
+        <td><button form="{{this.order_id}}" class="btn btn-primary input{{this.order_id}}" name="update" value="{{this.order_id}}">Update</td>
         <td><button class="btn btn-primary" name="delete" value="{{this.order_id}}">Delete</td>
       </tr>
     {{/each}}

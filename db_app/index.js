@@ -1,3 +1,9 @@
+/* Node JS structure & Imported Routers
+  Date: 3/1/21
+  Modified from
+  Source URL: https://github.com/knightsamar/cs340_sample_nodejs_app
+*/
+
 var express = require('express');
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var path = require('path');
@@ -36,6 +42,7 @@ app.use('/customers_products', require('./customers_products'));
 app.use('/orders_products', require('./orders_products'));
 app.use(express.static('../public'));
 
+// The Main Page
 app.get('/', function(req, res){
   var context = {'title': 'Home', 'jsscripts': ['scripts', 'home']};
   res.render('home', context);

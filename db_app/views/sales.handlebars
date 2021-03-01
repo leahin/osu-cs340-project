@@ -1,5 +1,19 @@
-<h1>Sales</h1>
-<br>
+<h1>Sales</h1><br>
+<div class="form">
+  <form id="selectSalesPeriod" method="POST" action="/sales">
+    <fieldset>
+      <legend>Select Sales Period</legend>
+      <label for="date_from">Date From</label>
+      <input type="date" name="dateFrom" required>
+      <label for="date_to">Date To</label>
+      <input type="date" name="dateTo" required>
+      <input type="submit" name="submit">
+    </fieldset>
+</form>
+</div>
+{{#if filter}}
+<h5>Sales Period from {{startDate}} to {{endDate}}</h5>
+{{/if}}
 <table class="table table-striped table-bordered" id="salestable">
   <thead>
     <tr>

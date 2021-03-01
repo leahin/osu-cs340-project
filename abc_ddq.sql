@@ -76,12 +76,14 @@ INSERT INTO `abc_products` VALUES
 -- Create Orders Table
 CREATE TABLE `abc_orders` (
   `order_id` INT(11) AUTO_INCREMENT NOT NULL,
-  `cid` INT(11),
-  `sid` INT(11),
+  `cid` INT(11) NULL,
+  `sid` INT(11) NULL,
   `order_date` date NOT NULL DEFAULT CURRENT_DATE(),
   PRIMARY KEY (`order_id`),
-  FOREIGN KEY (`cid`) REFERENCES `abc_customers` (`customer_id`),
+  FOREIGN KEY (`cid`) REFERENCES `abc_customers` (`customer_id`)
+    ON DELETE SET NULL,
   FOREIGN KEY (`sid`) REFERENCES `abc_stores` (`store_id`)
+    ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 
@@ -101,11 +103,12 @@ INSERT INTO `abc_orders` VALUES
 
 -- Create Orders_products Table
 CREATE TABLE `abc_orders_products` (
-  `pid` INT(11),
+  `pid` INT(11) NULL,
   `oid` INT(11),
   `quantity` TINYINT(1) NOT NULL,
   `total_price` DECIMAL(15, 2) NOT NULL,
-  FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`),
+  FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`)
+    ON DELETE SET NULL,
   FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`)
     ON DELETE CASCADE,
   CONSTRAINT CHK_quantity CHECK (quantity > 0),

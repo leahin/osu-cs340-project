@@ -1,7 +1,7 @@
 navCurrent("navOrders");
 
 function openAddOrder(event){
-  window.open('orders/add_order', "_blank", "width=380px, height=600px");
+  window.open('orders/add_order', "_blank", "width=500px, height=600px");
 }
 
 // table event for order details, order update and delete functions.

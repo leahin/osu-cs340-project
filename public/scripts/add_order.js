@@ -63,17 +63,32 @@ function deleteProduct(event){
   document.getElementById("productOrderAdd").removeChild(targetNode);
 }
 
+// request add Order and Orders_Products
 function addOrder(event){
   var req = new XMLHttpRequest();
   var orderInput = {}
   orderInput['sid'] = document.getElementsByName('sid')[0].value;
   orderInput['cid'] = document.getElementsByName('cid')[0].value;
+  if (orderInput['cid'].trim() === "" || isNaN(orderInput['cid'])) {
+    alert("Please enter a valid Customer Id.");
+    return;
+  }
   orderInput['orderDate'] = document.getElementsByName('orderDate')[0].value;
   var pids = document.getElementsByName('pid');
   var qtys = document.getElementsByName('qty');
   var pid = [];
   var qty = [];
   for (i = 0; i < pids.length; i++){
+    if (pids[i].value.trim() === "" || isNaN(pids[i].value)) {
+      alert("Please enter a valid product Id.");
+      event.preventDefault();
+      return;
+    };
+    if (qtys[i].value.trim() === "" || isNaN(qtys[i].value)) {
+      alert("Please enter the quantity.");
+      event.preventDefault();
+      return;
+    };
     pid.push(pids[i].value);
     qty.push(qtys[i].value);
   }
@@ -90,7 +105,7 @@ function addOrder(event){
 
 function defaultOrderDate() {
   var orderDateNode = document.getElementsByName("orderDate")[0];
-  console.log(orderDateNode)
+  //console.log(orderDateNode)
   var currentDate = new Date();
   var year = currentDate.getFullYear();
   var month = (currentDate.getMonth() + 1).toString();

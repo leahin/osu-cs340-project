@@ -1,7 +1,7 @@
-navCurrent("navCustomers");
+navCurrent("navStores");
 
-const customerTable = document.getElementById("customerTable");
-customerTable.onclick = function(event){
+const storeTable = document.getElementById("storeTable");
+storeTable.onclick = function(event){
   var target = event.target;
 
   if (target.name == 'delete'){
@@ -10,16 +10,17 @@ customerTable.onclick = function(event){
 
   if (target.name == 'update'){
     var inputElements = document.getElementsByClassName("input" + target.value);
+    var nameInput = inputElements[0];
+    var addressInput = inputElements[1];
+    var stateInput = inputElements[2];
+    var zipInput = inputElements[3];
+    var updateButton = inputElements[4];
 
-    var fnameInput = inputElements[0];
-    var lnameInput = inputElements[1];
-    var birthdateInput = inputElements[2];
-    var updateButton = inputElements[3];
 
-
-    fnameInput.disabled = false;
-    lnameInput.disabled = false;
-    birthdateInput.disabled = false;
+    nameInput.disabled = false;
+    addressInput.disabled = false;
+    stateInput.disabled = false;
+    zipInput.disabled = false;
 
     event.preventDefault();
 
@@ -28,10 +29,11 @@ customerTable.onclick = function(event){
     updateButton.addEventListener('click', (event) => {
 
       var inputs = {};
-      inputs['customer_id'] = target.value;
-      inputs['first_name'] = target.form.custFname.value;
-      inputs['last_name'] = target.form.custLname.value;
-      inputs['birthdate'] = target.form.custBirthdate.value;
+      inputs['store_id'] = target.value;
+      inputs['store_name'] = target.form.storeName.value;
+      inputs['street_address'] = target.form.streetAddress.value;
+      inputs['state'] = target.form.state.value;
+      inputs['zip_code'] = target.form.zipCode.value;
 
 
 
@@ -45,7 +47,7 @@ customerTable.onclick = function(event){
 
 function requestDelete(event, id){
   var req = new XMLHttpRequest();
-  req.open('DELETE', '/customers')
+  req.open('DELETE', '/stores')
   req.setRequestHeader('Content-Type', 'application/json')
   req.send(JSON.stringify({id: id}));
 }
@@ -53,7 +55,7 @@ function requestDelete(event, id){
 
 function requestPut(event, inputs){
   var req = new XMLHttpRequest();
-  req.open('PUT', '/customers')
+  req.open('PUT', '/stores')
   req.setRequestHeader('Content-Type', 'application/json')
   req.send(JSON.stringify(inputs));
 }

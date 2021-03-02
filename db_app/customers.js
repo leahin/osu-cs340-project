@@ -3,91 +3,183 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
-  // Get Customer Data from Server
-  function getCustomers(res, mysql, context, complete) {
-    mysql.pool.query("SELECT customer_id, first_name, last_name, birthdate FROM abc_customers", function (error, results, fields) {
-      if (error) {
-        res.write(JSON.stringify(error));
-        res.end();
-      }
-      context.customers = results;
-      complete();
-    });
-  }
 
-// Route Customer Data from Server
-  router.get('/', function (req, res) {
-    var callbackCount = 0;
-    var context = {};
-    var mysql = req.app.get('mysql');
 
-    getCustomers(res, mysql, context, complete);
+  var getQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers';
+  var searchQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers WHERE first_name = ?';
+  var insertQuery = 'INSERT INTO abc_customers (first_name, last_name, birthdate) VALUES (?,?,?)';
+  var updateQuery = 'UPDATE abc_customers SET first_name = ?, last_name = ?, birthdate = ? WHERE customer_id = ?';
+  var deleteQuery = 'DELETE FROM abc_customers WHERE customer_id = ?';
 
-    function complete() {
-      callbackCount++;
-      if (callbackCount >= 1) {
-        res.render('customers', context);
-      }
 
+// READ Store
+function getCustomerInputList(results){
+  var context = {'title': 'Customers', 'jsscripts': ['scripts', 'customers']};
+  var inputList = [];
+
+  for (i = 0; i < results.length; i++){
+    var data = results[i];
+    var temp = {};
+    temp['customer_id'] = data.customer_id;
+    temp['first_name'] = data.first_name;
+    temp['last_name'] = data.last_name;
+    temp['birthdate'] = data.birthdate;
+
+    inputList.push(temp);
+  };
+
+  context['inputList'] = inputList;
+  JSON.stringify(context);
+  return context;
+};
+
+//----------- Read Store Function ---------------//
+
+function getCustomers(req, res){
+  var mysql = req.app.get('mysql');
+
+  mysql.pool.query(getQuery, (error, results, fields) => {
+    if (error) {
+      console.log("DB getCustomers Error: " + error);
+      res.send(error);
+      return;
     }
+    res.render('customers', getCustomerInputList(results));
   });
+};
 
-  // Adds a store to db
+//----------------------------------------------//
 
-  router.post('/', function (req, res) {
-    console.log(req.body)
-    var mysql = req.app.get('mysql');
-    var sql = "INSERT INTO abc_customers (first_name, last_name, birthdate) VALUES (?,?,?)";
-    var inserts = [req.body.first_name, req.body.last_name, req.body.birthdate];
-    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-      if (error) {
-        console.log(JSON.stringify(error))
-        res.write(JSON.stringify(error));
-        res.end();
-      } else {
-        res.redirect('/customers');
-      }
-    });
+
+//----------- Search Store Function ---------------//
+
+function searchCustomer(req, res){
+  var mysql = req.app.get('mysql');
+  var customerName = req.body.customerName;
+
+  mysql.pool.query(searchQuery, customerName, (error, results, fields) => {
+    if (error) {
+      console.log("DB searchCustomer Error: " + error);
+      res.send(error);
+      return;
+    };
+    res.render('customers', getCustomerInputList(results));
   });
+};
 
 
-  return router;
+//----------- Add Store Function ---------------//
+
+function insertCustomer(req, res){
+  var mysql = req.app.get('mysql');
+  var {custFname, custLname, custBirthdate} = req.body;
+
+  mysql.pool.query (insertQuery, [custFname, custLname, custBirthdate], (error) => {
+  if (error) {
+      console.log("DB insertCustomer Error: " + error);
+      res.send(error);
+      return;
+    };
+    res.redirect('/customers');
+  });
+};
+
+//----------------------------------------------//
+
+
+//----------- Update Store Function ---------------//
+
+function updateCustomer(req, res) {
+  var mysql = req.app.get('mysql');
+  var {customer_id, first_name, last_name, birthdate} = req.body;
+  mysql.pool.query(updateQuery, [first_name, last_name, birthdate, customer_id], (error) => {
+    if(error){
+      console.log("DB updateCustomer Error: " + error);
+      res.send(error);
+      return;
+    };
+    res.redirect('/customers');
+  });
+};
+
+//----------- Delete Store Function ---------------//
+
+function deleteCustomer(req, res) {
+  var mysql = req.app.get('mysql');
+  var customer_Id = req.body.id;
+
+  mysql.pool.query(deleteQuery, customer_Id, (error) => {
+    if (error) {
+      console.log("DB deleteCustomer Error: " + error);
+      res.send(error);
+      return;
+    }
+    res.redirect('/customers');
+  });
+};
+
+//------------------------------------------------//
+
+
+
+router.get('/', getCustomers)
+router.post('/', searchCustomer)
+router.post('/insert', insertCustomer)
+router.delete('/', deleteCustomer)
+router.put('/', updateCustomer)
+
+
+return router;
 }();
 
+//   // Get Customer Data from Server
+//   function getCustomers(res, mysql, context, complete) {
+//     mysql.pool.query("SELECT customer_id, first_name, last_name, birthdate FROM abc_customers", function (error, results, fields) {
+//       if (error) {
+//         res.write(JSON.stringify(error));
+//         res.end();
+//       }
+//       context.customers = results;
+//       complete();
+//     });
+//   }
+
+// // Route Customer Data from Server
+//   router.get('/', function (req, res) {
+//     var callbackCount = 0;
+//     var context = {};
+//     var mysql = req.app.get('mysql');
+
+//     getCustomers(res, mysql, context, complete);
+
+//     function complete() {
+//       callbackCount++;
+//       if (callbackCount >= 1) {
+//         res.render('customers', context);
+//       }
+
+//     }
+//   });
+
+//   // Adds a store to db
+
+//   router.post('/', function (req, res) {
+//     console.log(req.body)
+//     var mysql = req.app.get('mysql');
+//     var sql = "INSERT INTO abc_customers (first_name, last_name, birthdate) VALUES (?,?,?)";
+//     var inserts = [req.body.first_name, req.body.last_name, req.body.birthdate];
+//     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+//       if (error) {
+//         console.log(JSON.stringify(error))
+//         res.write(JSON.stringify(error));
+//         res.end();
+//       } else {
+//         res.redirect('/customers');
+//       }
+//     });
+//   });
 
 
-
-  // router.get('/', function(req, res){
-  //   var context = {'title': 'Customers', 'script': 'customers'};
-
-
-    // TODO: sql statement goes here...
-    // TODO: use loop to create an array & mapping
-
-    // TODO: delete dummyData
-  //   var dummyData = [
-  //     {id: '1', fname: 'Emma', lname: 'Woodhouse', birthdate: '2001-01-01'},
-  //     {id: '2', fname: 'Jack', lname: 'Tyler', birthdate: '2002-02-02'},
-  //     {id: '3', fname: 'Jane', lname: 'Hudson', birthdate: '2003-03-03'},
-  //   ];
-
-  //   context['inputList'] = dummyData;
-  //   JSON.stringify(context);
-  //   res.render('customers', context);
-  // });
-
-
-  // router.post('/customers', function(req, res){
-  //   // TODO: insert INTO
-  // });
-  //
-  //
-  // router.put('/customers', function(req, res){
-  //   // TODO: update
-  // });
-  //
-  //
-  // router.delete('/customers', function(req, res){
-  //   // TODO: delete
-  // });
+//   return router;
+// }();
 

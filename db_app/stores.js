@@ -3,7 +3,7 @@ module.exports = function(){
   var router = express.Router();
 
   var getQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores';
-  var searchQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE store_name = ?';
+  var searchQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE store_name LIKE ?';
   var insertQuery = 'INSERT INTO abc_stores (store_name, street_address, state, zip_code) VALUES (?,?,?,?)';
   var updateQuery = 'UPDATE abc_stores SET store_name = ?, street_address = ?, state = ?, zip_code = ? WHERE store_id = ?';
   var deleteQuery = 'DELETE FROM abc_stores WHERE store_id = ?';
@@ -53,7 +53,7 @@ function getStores(req, res){
 
 function searchStore(req, res){
   var mysql = req.app.get('mysql');
-  var storeName = req.body.storeName;
+  var storeName = '%' + req.body.storeName + '%';
 
   mysql.pool.query(searchQuery, storeName, (error, results, fields) => {
     if (error) {

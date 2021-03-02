@@ -3,8 +3,6 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
-
-
   var getQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers';
   var searchQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers WHERE first_name = ?';
   var insertQuery = 'INSERT INTO abc_customers (first_name, last_name, birthdate) VALUES (?,?,?)';
@@ -16,14 +14,24 @@ module.exports = function(){
 function getCustomerInputList(results){
   var context = {'title': 'Customers', 'jsscripts': ['scripts', 'customers']};
   var inputList = [];
-
   for (i = 0; i < results.length; i++){
     var data = results[i];
     var temp = {};
     temp['customer_id'] = data.customer_id;
     temp['first_name'] = data.first_name;
     temp['last_name'] = data.last_name;
-    temp['birthdate'] = data.birthdate;
+
+    var raw = new Date(data.birthdate);
+    year = String(raw.getFullYear());
+    var month = String(raw.getMonth() + 1);
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    var date = String(raw.getDate());
+    if (date.length < 2) {
+      date = '0' + date;
+    }
+    temp['birthdate'] = year + '-' + month + '-' + date;
 
     inputList.push(temp);
   };
@@ -182,4 +190,3 @@ return router;
 
 //   return router;
 // }();
-

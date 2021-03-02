@@ -20,9 +20,12 @@
     <form method="get" class="searchForm">
       <input type="text" id="custerFNameSearch" placeholder="First Name">
       <input type="text" id="custerLNameSearch" placeholder="Last Name">
-      <input type="text" id="custerBdayFrom" placeholder="Birthdate From">
-      <input type="text" id="custerBdayTo" placeholder="Birthdate To">
-      <input type="submit" id="searchCustomerSubmit" value="Search">
+      Birthdate:
+      <label for="custerBdayFrom">From</label>
+      <input type="date" id="custerBdayFrom">
+      <label for="custerBdayTo">To</label>
+      <input type="date" id="custerBdayTo">
+      <input class="btn btn-secondary btn-sm" type="submit" id="searchCustomerSubmit" value="Search">
     </form>
   </fieldset>
 </div>
@@ -45,7 +48,7 @@
         <td><form id="{{this.customer_id}}">{{this.customer_id}}</form></td>
         <td><input form="{{this.customer_id}}" type="text" class="input{{this.customer_id}}" name="custFname" value="{{this.first_name}}" disabled required></td>
         <td><input form="{{this.customer_id}}" type="text" class="input{{this.customer_id}}" name="custLname" value="{{this.last_name}}" disabled required></td>
-        <td><input form="{{this.customer_id}}" type="text" class="input{{this.customer_id}}" name="custBirthdate" value="{{this.birthdate}}" disabled required></td>
+        <td><input form="{{this.customer_id}}" type="date" class="input{{this.customer_id}}" name="custBirthdate" value="{{this.birthdate}}" disabled required></td>
 
         <td><button form="{{this.customer_id}}" class="btn btn-primary input{{this.customer_id}}" name="update" value="{{this.customer_id}}">Update</button></td>
         <td><button form="{{this.customer_id}}" class="btn btn-primary" name="delete" value="{{this.customer_id}}">Delete</button></td>

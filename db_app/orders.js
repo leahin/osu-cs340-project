@@ -21,6 +21,9 @@ module.exports = function(){
                             INNER JOIN abc_products as p ON op.pid = p.product_id \
                             WHERE op.oid = ? ORDER BY op.pid';
 
+  var customerQuery = 'SELECT * FROM abc_customers';
+  var productQuery = 'SELECT * FROM abc_products';
+
 
   // READ ORDERS helper function
   function getOrderInputList(results){
@@ -164,7 +167,13 @@ module.exports = function(){
     var context = {'title': 'Add Order', 'jsscripts': ['scripts', 'add_order']};
     context['layout'] = 'noNav.handlebars';
 
+    // get store list
     mysql.pool.query(storeQuery, (error, results, fields) => {
+      if (error){
+        console.log("StoreQuery Error: " + error);
+        res.send("StoreQuery Error:" + error);
+        return;
+      }
       var storeList = [];
       for (i = 0; i < results.length; i++){
         var temp = {};
@@ -189,19 +198,27 @@ module.exports = function(){
     var qtys = req.body.qty;
 
     // add Orders first
-    mysql.pool.query(insertOrder, [cid, sid, order_date], (error) => {
+    mysql.pool.query(insertOrder, [cid, sid, order_date], async (error) => {
       if (error) {
         console.log(error);
         res.send(error);
         return;
       };
-    })
+      // add Orders_Products
+      for (i = 0; i < pids.length; i ++) {
+        var pid = pids[i];
+        var quantity = qtys[i];
+        await addOrderInsertHelper(pid, quantity);
+      }
+      res.redirect('/add_order');
+    });
 
-    // calculate the total_price.
+    // add Orders_Products helper fuction
     function addOrderInsertHelper (pid, quantity) {
+        // calculate the total_price.
       mysql.pool.query(getUnitPrice, pid, (error, results, fields) => {
         if (error) {
-          console.log('getUnitPrice Error: ' + adderror);
+          console.log('getUnitPrice Error: ' + error);
           res.send(error);
           return;
         };
@@ -226,14 +243,7 @@ module.exports = function(){
           });
         });
       });
-    }
-
-    for (i = 0; i < pids.length; i ++) {
-      var pid = pids[i];
-      var quantity = qtys[i];
-      await addOrderInsertHelper(pid, quantity);
-    }
-    res.redirect('/add_order');
+    };
   }
 
   // READ ORDERS_PRODUCTS
@@ -247,7 +257,7 @@ module.exports = function(){
         console.log(err);
         res.send(err);
         return;
-      }
+      };
 
       JSON.stringify(rows);
       var inputList = [];
@@ -266,11 +276,11 @@ module.exports = function(){
         temp['qty'] = data['quantity'];
         temp['total_price'] = data['total_price'];
         inputList.push(temp);
-      }
+      };
       var grandTotal = 0;
       for (j = 0; j < inputList.length; j++){
         grandTotal = grandTotal + inputList[j]['total_price'];
-      }
+      };
       context['inputList'] = inputList;
       context['grandTotal'] = grandTotal.toFixed(2);
       context['orderId'] = orderId;

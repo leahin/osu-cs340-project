@@ -64,7 +64,7 @@ function deleteProduct(event){
 }
 
 // request add Order and Orders_Products
-function addOrder(event){
+async function addOrder(event){
   var req = new XMLHttpRequest();
   var orderInput = {}
   orderInput['sid'] = document.getElementsByName('sid')[0].value;
@@ -95,9 +95,9 @@ function addOrder(event){
   orderInput['pid'] = pid;
   orderInput['qty'] = qty;
 
-  req.open('POST', '/orders/add_order')
-  req.setRequestHeader('Content-Type', 'application/json')
-  req.send(JSON.stringify(orderInput))
+  await req.open('POST', '/orders/add_order')
+  await req.setRequestHeader('Content-Type', 'application/json')
+  await req.send(JSON.stringify(orderInput))
 
   window.opener.location.reload(false);
   window.close();

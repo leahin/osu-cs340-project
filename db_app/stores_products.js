@@ -27,8 +27,6 @@ module.exports = function(router){
     });
   }
 
-    // Route Store Data from DB
-
   router.get('/', function (req, res) {
     var callbackCount = 0;
     var context = {};

@@ -3,6 +3,11 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
+
+
+  // Move Queries into functions
+
+  
   var getQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers';
   var searchQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers WHERE first_name = ?';
   var insertQuery = 'INSERT INTO abc_customers (first_name, last_name, birthdate) VALUES (?,?,?)';
@@ -193,3 +198,7 @@ return router;
 
 //   return router;
 // }();
+
+
+// Comment Source Code Here:
+//Leah In Products.js (will correct this soon)

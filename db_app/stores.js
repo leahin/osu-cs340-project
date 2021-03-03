@@ -2,6 +2,7 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
+  // Move Queries into functions
   var getQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores';
   var searchQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE store_name LIKE ?';
   var insertQuery = 'INSERT INTO abc_stores (store_name, street_address, state, zip_code) VALUES (?,?,?,?)';
@@ -47,9 +48,19 @@ function getStores(req, res){
 };
 
 //----------------------------------------------//
-
+  //   function getStores(res, mysql, context, complete) {
+  //   mysql.pool.query("SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores", function (error, results, fields) {
+  //     if (error) {
+  //       res.write(JSON.stringify(error));
+  //       res.end();
+  //     }
+  //     context.stores = results;
+  //     complete();
+  //   });
+  // }
 
 //----------- Search Store Function ---------------//
+// IF Time permits change this to a drop down filter
 
 function searchStore(req, res){
   var mysql = req.app.get('mysql');
@@ -64,7 +75,36 @@ function searchStore(req, res){
     res.render('stores', getStoreInputList(results));
   });
 };
+//----------- Search Store Function ---------------//
 
+// //   function getSearchStore(req,res,mysql,context,complete){
+// //     var sql = "SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE concat(store_name, state) = ?"
+// //     var inserts = [req.params.name];
+// //     console.log(inserts);
+// //     mysql.pool.query(sql, inserts, function(error, results, fields){
+// //         if(error){
+// //             res.write(JSON.stringify(error));
+// //             res.end();
+// //         }
+// //         console.log(results);
+
+// //         context.stores = results;
+// //         complete();
+// //     })
+// // }
+
+//   function getStore(res, mysql, context, id, complete){
+//     var sql = "SELECT store_id as id, store_name, street_address, state, zip_code FROM abc_stores WHERE store_id = ?";
+//     var inserts = [id];
+//     mysql.pool.query(sql, inserts, function(error, results, fields){
+//         if(error){
+//             res.write(JSON.stringify(error));
+//             res.end();
+//         }
+//         context.person = results[0];
+//         complete();
+//     });
+// }
 
 //----------- Add Store Function ---------------//
 
@@ -121,68 +161,6 @@ function deleteStore(req, res) {
 
 
 router.get('/', getStores)
-router.post('/', searchStore)
-router.post('/insert', insertStore)
-router.delete('/', deleteStore)
-router.put('/', updateStore)
-
-
-return router;
-}();
-
-
-
-
-// //   function getSearchStore(req,res,mysql,context,complete){
-// //     var sql = "SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE concat(store_name, state) = ?"
-// //     var inserts = [req.params.name];
-// //     console.log(inserts);
-// //     mysql.pool.query(sql, inserts, function(error, results, fields){
-// //         if(error){
-// //             res.write(JSON.stringify(error));
-// //             res.end();
-// //         }
-// //         console.log(results);
-
-// //         context.stores = results;
-// //         complete();
-// //     })
-// // }
-
-
-
-//   // Get Store Data from DB
-
-//     function getStores(res, mysql, context, complete) {
-//     mysql.pool.query("SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores", function (error, results, fields) {
-//       if (error) {
-//         res.write(JSON.stringify(error));
-//         res.end();
-//       }
-//       context.stores = results;
-//       complete();
-//     });
-//   }
-
-
-
-//   function getStore(res, mysql, context, id, complete){
-//     var sql = "SELECT store_id as id, store_name, street_address, state, zip_code FROM abc_stores WHERE store_id = ?";
-//     var inserts = [id];
-//     mysql.pool.query(sql, inserts, function(error, results, fields){
-//         if(error){
-//             res.write(JSON.stringify(error));
-//             res.end();
-//         }
-//         context.person = results[0];
-//         complete();
-//     });
-// }
-
-
-
-
-//   // Route Store Data from DB
 
 //   router.get('/', function (req, res) {
 //     var callbackCount = 0;
@@ -198,7 +176,36 @@ return router;
 //     }
 //   });
 
-//   // Adds a store to db
+
+router.post('/', searchStore)
+
+// //   router.get('/search/:name', function(req, res){
+// //     var callbackCount = 0;
+// //     var context = {};
+// //     context.jsscripts = ["scriptStores.js"];
+// //     console.log(context);
+// //     var mysql = req.app.get('mysql');
+// //     getSearchStore(req,res,mysql, context, complete);
+// //     function complete(){
+// //         callbackCount++;
+// //         if(callbackCount >= 1){
+// //             res.render('stores', context);
+// //         }
+// //     }
+
+// router.get('/:id', function(req, res){
+//   callbackCount = 0;
+//   var context = {};
+//   context.jsscripts = ["updateStore.js"];
+//   var mysql = req.app.get('mysql');
+//   getStore(res, mysql, context, req.params.id, complete);
+//   function complete(){
+//       callbackCount++;
+//       if(callbackCount >= 1){
+//           res.render('update-store', context);
+//       }
+
+router.post('/insert', insertStore)
 
 //   router.post('/', function (req, res) {
 //     console.log(req.body)
@@ -216,36 +223,25 @@ return router;
 //     });
 //   });
 
+router.delete('/', deleteStore)
 
-// //   router.get('/search/:name', function(req, res){
-// //     var callbackCount = 0;
-// //     var context = {};
-// //     context.jsscripts = ["scriptStores.js"];
-// //     console.log(context);
-// //     var mysql = req.app.get('mysql');
-// //     getSearchStore(req,res,mysql, context, complete);
-// //     function complete(){
-// //         callbackCount++;
-// //         if(callbackCount >= 1){
-// //             res.render('stores', context);
-// //         }
-// //     }
-
-// // })
-// router.get('/:id', function(req, res){
-//   callbackCount = 0;
-//   var context = {};
-//   context.jsscripts = ["updateStore.js"];
-//   var mysql = req.app.get('mysql');
-//   getStore(res, mysql, context, req.params.id, complete);
-//   function complete(){
-//       callbackCount++;
-//       if(callbackCount >= 1){
-//           res.render('update-store', context);
+//   router.delete('/:id', function (req, res) {
+//     var mysql = req.app.get('mysql');
+//     var sql = "DELETE FROM abc_stores WHERE store_id = ?";
+//     var inserts = [req.params.id];
+//     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+//       if (error) {
+//         console.log(error)
+//         res.write(JSON.stringify(error));
+//         res.status(400);
+//         res.end();
+//       } else {
+//         res.status(202).end();
 //       }
+//     })
+//   })
 
-//   }
-// });
+router.put('/', updateStore)
 
 //   router.put('/:id', function (req, res) {
 //     var mysql = req.app.get('mysql');
@@ -266,24 +262,9 @@ return router;
 //   });
 
 
+return router;
+}();
 
 
-//   router.delete('/:id', function (req, res) {
-//     var mysql = req.app.get('mysql');
-//     var sql = "DELETE FROM abc_stores WHERE store_id = ?";
-//     var inserts = [req.params.id];
-//     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
-//       if (error) {
-//         console.log(error)
-//         res.write(JSON.stringify(error));
-//         res.status(400);
-//         res.end();
-//       } else {
-//         res.status(202).end();
-//       }
-//     })
-//   })
-
-
-//   return router;
-// }();
+// Comment Source Code Here:
+//Leah In Products.js (will correct this soon)

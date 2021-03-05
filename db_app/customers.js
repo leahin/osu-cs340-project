@@ -68,12 +68,12 @@ function getCustomers(req, res){
 
 function searchCustomer(req, res){
   var mysql = req.app.get('mysql');
-  var custFname = req.body.custFname;
-  var custLname = req.body.custLname;
-  var custBdayFrom = req.body.custBdayFrom;
-  var custBdayTo = req.body.custBdayTo;
+  var custFname = '%' + req.body.custFname + '%';
+  // var custLname = req.body.custLname;
+  // var custBdayFrom = req.body.custBdayFrom;
+  // var custBdayTo = req.body.custBdayTo;
 
-  mysql.pool.query(searchQuery, customerName, (error, results, fields) => {
+  mysql.pool.query(searchQuery, custFname, (error, results, fields) => {
     if (error) {
       console.log("DB searchCustomer Error: " + error);
       res.send(error);

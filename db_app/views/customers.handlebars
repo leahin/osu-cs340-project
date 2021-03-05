@@ -17,18 +17,19 @@
 <div class="form">
   <fieldset>
     <legend>Search Customer</legend>
-    <form method="get" class="searchForm">
+    <form method="POST" action = '/customers'>
       <input type="text" name="custFname" placeholder="First Name">
-      <input type="text" name="custLname" placeholder="Last Name">
+      {{!-- <input type="text" name="custLname" placeholder="Last Name">
       Birthdate:
       <label for="custBdayFrom">From</label>
       <input type="date" name="custBdayFrom">
       <label for="custBdayTo">To</label>
-      <input type="date" name="custBdayTo">
+      <input type="date" name="custBdayTo"> --}}
       <input class="btn btn-secondary btn-sm" type="submit" value="Search">
     </form>
   </fieldset>
 </div>
+
 
 <!-- read/update/delete data -->
 <table class="table table-striped table-bordered" id="customerTable">

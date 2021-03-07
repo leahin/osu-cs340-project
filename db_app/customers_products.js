@@ -13,6 +13,8 @@ module.exports = function(){
   Group BY abc_customers.customer_id ASC";
 
 // Needs Age Calculation added to getCustomer function (Current Date - Birthdate)
+
+
 // WHERE abc_products.product_id = 1  needs to be changed to the age group selection.
 
 function getCustomer(res, mysql, context, complete) {

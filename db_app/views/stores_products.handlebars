@@ -12,17 +12,18 @@
 <p>users submit one product and the app shows the qty sold at each store.
 <br> (M:M Orders and Products, 1:M Stores and Orders)</p>
 
+<div class="dropdown">
+  <form id="filter_stores" action='/stores_products' method='POST'>
+  <h2>Select Product</h2>
+  <select id='storeProd_filter' name="storeProd">
+    {{#each products}}
+    <option value="{{this.product_id}}">{{this.product_name}}</option>
+    {{/each}}
+  </select>
+  <input type="button" value="Search" onclick="storeProducts()">
+</form>
+</div>
 
-  <h2>Select Product</h2>                                      
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Products
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      {{#each products}}
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{product_id}}.  {{product_name}}</a></li>
-      {{/each}}
-    </ul>
-  </div>
 
 <br>
 

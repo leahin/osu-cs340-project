@@ -25,3 +25,7 @@ JOIN abc_customers ON abc_customers.customer_id = abc_orders.cid
 JOIN abc_products ON abc_products.product_id = abc_orders_products.pid
 WHERE abc_products.product_id = 1
 Group BY abc_customers.customer_id ASC;
+
+-- add an age_group column to the customer Table
+ALTER TABLE abc_customers
+ADD age_group varchar(255);

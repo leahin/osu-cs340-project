@@ -4,15 +4,21 @@ module.exports = function(router){
   var router = express.Router();
 
 
+var storeProd = 1;
+
   var reportQuery = "SELECT abc_stores.store_id, abc_stores.store_name, abc_products.product_name, IFNULL(SUM(abc_orders_products.quantity), 0) as Total \
             FROM abc_orders_products \
             JOIN abc_orders ON abc_orders_products.oid = abc_orders.order_id \
             JOIN abc_stores ON abc_stores.store_id = abc_orders.sid \
             JOIN abc_products ON abc_products.product_id = abc_orders_products.pid \
-            WHERE abc_products.product_id = 1 \
+            WHERE abc_products.product_id =" + storeProd +" \
             Group BY abc_stores.store_id ASC";
+
 // Need to change WHERE abc_products.product_id = 1 \ to the value selected in the drop down menu
 
+
+
+//Build dropdown filter get data to show the Products that are the database
   function getProducts(res, mysql, context, complete) {
     mysql.pool.query("SELECT product_id, product_name FROM abc_products", function (error, results, fields) {
       if (error) {
@@ -24,6 +30,7 @@ module.exports = function(router){
     });
   }
 
+  // Get Data for table to show Store ID, Store Name, Product, Quantity Sold
   function getStores(res, mysql, context, complete) {
     mysql.pool.query(reportQuery, function (error, results, fields) {
       if (error) {

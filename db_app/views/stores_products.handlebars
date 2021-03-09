@@ -1,53 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<p>Stores and Products Page</p>
-<p>users submit one product and the app shows the qty sold at each store.
-<br> (M:M Orders and Products, 1:M Stores and Orders)</p>
-
-<div class="dropdown">
-  <form id="filter_stores" action='/stores_products' method='POST'>
-  <h2>Select Product</h2>
-  <select id='storeProd_filter' name="storeProd">
-    {{#each products}}
-    <option value="{{this.product_id}}">{{this.product_name}}</option>
-    {{/each}}
-  </select>
-  <input type="button" value="Search" onclick="storeProducts()">
-</form>
+<h1>Stores and Products</h1>
+<p>Displays how many of a selected product sold at each store so far.</p>
+<div class="form">
+  <form action="/stores_products" method="POST">
+    <fieldset>
+      <legend>Select Product</legend>
+      <div class="form-row">
+        <div class="col-4">
+          <select class="form-control" name="storeProd">
+            {{#each products}}
+            <option value="{{this.product_id}}">{{this.product_name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <input class="btn btn-secondary btn-sm" type="submit" value="Search">
+      </div>
+    </fieldset>
+  </form>
 </div>
-
-
-<br>
-
-
+<h5>Product Selected: {{product_name}}</h5>
 <!-- read/update/delete data -->
-  <table class="table table-striped table-bordered" id="reportSP">
+  <table class="table table-striped table-bordered">
     <thead>
       <tr>
         <th>Store Id</th>
         <th>Store Name</th>
-        <th>Product</th>
+        <th>Product Name</th>
         <th>Quantity Sold</th>
       </tr>
     </thead>
-
     <tbody>
     {{#each stores}}
       <tr>
         <td>{{store_id}}</td>
         <td>{{store_name}}</td>
         <td>{{product_name}}</td>
-        <td>{{Total}}</td>
+        <td>{{total}}</td>
       </tr>
     {{/each}}
-  
     </tbody>
   </table>

@@ -14,39 +14,38 @@ module.exports = function(router){
                 GROUP BY s.store_id \
                 ORDER BY total_sales DESC';
 
-  // READ SALES (sales main page)
+  // read sales (sales main page)
   router.get('/', (req, res) => {
-    var context = {'title': 'Sales', 'jsscripts': 'sales'};
+    var context = {'title': 'Sales'};
     var mysql = req.app.get('mysql');
 
     mysql.pool.query(query, (error, results, fields) => {
       if (error){
         console.log(error);
-        res.send(error);
-        return;
+        res.write(JSON.stringify(error));
+        res.end();
       };
-      JSON.stringify(results);
-      // console.log(results);
-      var inputList = [];
+      
+      // modify the received data
+      let inputList = [];
       for (i = 0; i < results.length; i++){
-        var data = results[i];
-        var temp = {};
-        temp['store_id'] = data.store_id;
-        temp['store_name'] = data.store_name;
-        temp['total_sales'] = data.total_sales;
+        let temp = {};
+        let data = results[i];
+        temp.store_id = data.store_id;
+        temp.store_name = data.store_name;
+        temp.total_sales = Number(data.total_sales).toFixed(2);
         inputList.push(temp);
-      }
+      };
+
       context['inputList'] = inputList;
       context['filter'] = false;
-      // console.log(context);
-      JSON.stringify(context);
       res.render('sales', context)
     })
   });
 
-  // FILTER SALES
+  // sales period filter
   router.post('/', (req, res) => {
-    var context = {'title': 'Sales', 'jsscripts': 'sales'};
+    var context = {'title': 'Sales'};
     var mysql = req.app.get('mysql');
     var dateFrom = req.body.dateFrom;
     var dateTo = req.body.dateTo;
@@ -54,36 +53,36 @@ module.exports = function(router){
     // period validation
     if (dateFrom > dateTo) {
       res.send("Error: Invalid Sales Period");
-      return;
+      res.end();
     }
 
     mysql.pool.query(filterQuery, [dateFrom, dateTo], (error, results, fields) => {
       if (error){
         console.log(error);
-        res.send(error);
-        return;
+        res.write(JSON.stringify(error));
+        res.end();
       };
-      JSON.stringify(results);
-      var inputList = [];
+
+      // modify the received data
+      let inputList = [];
       for (i = 0; i < results.length; i++){
-        var data = results[i];
-        var temp = {};
-        temp['store_id'] = data.store_id;
-        temp['store_name'] = data.store_name;
-        temp['total_sales'] = data.total_sales;
+        let temp = {};
+        let data = results[i];
+        temp.store_id = data.store_id;
+        temp.store_name = data.store_name;
+        temp.total_sales = Number(data.total_sales).toFixed(2);
         inputList.push(temp);
-      }
+      };
 
       var tempDate = dateFrom.split("-");
       var startDate = tempDate[1] + "/" + tempDate[2] + "/" + tempDate[0];
       var tempDate = dateTo.split("-");
       var endDate = tempDate[1] + "/" + tempDate[2] + "/" + tempDate[0];
 
+      context['inputList'] = inputList;
       context['filter'] = true;
       context['startDate'] = startDate;
       context['endDate'] = endDate;
-      context['inputList'] = inputList;
-      JSON.stringify(context);
       res.render('sales', context);
     });
   });

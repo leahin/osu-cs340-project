@@ -2,8 +2,8 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
-  var getQuery = 'SELECT * FROM abc_products';
-  var searchQuery = 'SELECT * FROM abc_products WHERE product_name = ?';
+  var getQuery = 'SELECT * FROM abc_products ORDER BY product_id DESC';
+  var searchQuery = 'SELECT * FROM abc_products WHERE product_name LIKE ?';
   var insertQuery = 'INSERT INTO abc_products (product_name, product_price) VALUES (?, ?)';
   var updateQuery = 'UPDATE abc_products SET product_name = ?, product_price = ? WHERE product_id = ?';
   var deleteQuery = 'DELETE FROM abc_products WHERE product_id = ?';
@@ -45,7 +45,7 @@ module.exports = function(){
   // Filter Products
   function searchProduct(req, res){
     var mysql = req.app.get('mysql');
-    var productName = req.body.productName;
+    var productName = '%' + req.body.productName + '%';
 
     if (productName.trim() === ""){
       res.send("ERROR: No User Input.");
@@ -67,7 +67,7 @@ module.exports = function(){
     var mysql = req.app.get('mysql');
     var {productName, productPrice} = req.body;
 
-    // User input validation.
+    // verify user input
     if (productName.trim() === ""){
       return;
     };

@@ -24,6 +24,7 @@ module.exports = function(){
 function getCustomer(res, mysql, context, complete, ageGroup) {
   mysql.pool.query(reportQuery, ageGroup, function (error, results, fields) {
     if (error) {
+      console.log(error);
       res.write(JSON.stringify(error));
       res.end();
     }

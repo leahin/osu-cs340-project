@@ -18,6 +18,7 @@ module.exports = function(router){
   function getProducts(res, mysql, context, complete) {
     mysql.pool.query(productQuery, function (error, results, fields) {
       if (error) {
+        console.log(error);
         res.write(JSON.stringify(error));
         res.end();
       }
@@ -30,6 +31,7 @@ module.exports = function(router){
   function getStores(res, mysql, context, complete, product_id) {
     mysql.pool.query(reportQuery, product_id, function (error, results, fields) {
       if (error) {
+        console.log(error);
         res.write(JSON.stringify(error));
         res.end();
       }

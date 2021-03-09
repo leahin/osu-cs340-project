@@ -3,20 +3,27 @@
   Copied from
   Source URL: https://getbootstrap.com/docs/4.0/components/forms/-->
 <h3 style="margin-left: 10px;">Add Order</h3>
+<p style="margin-left: 10px;">Note: Adding a product_id that is not in the database will make an empty order.</p>
 <div class="newWindow">
   <form id="productOrderAdd">
     <div class="form-row">
       <div class="col-7">
-        <label>Customer Id</label>
-          <input type="text" class="form-control" name="cid" required>
+        <label>Customer</label>
+          <select class="form-control" name="cid">
+            <option value = ""></option>
+            {{#each customerList}}
+            <option value = "{{this.customer_id}}">{{{this.first_name}}} {{{this.last_name}}}</option>
+            {{/each}}
+          </select>
       </div>
     </div>
     <div class="form-row">
       <div class="col-7">
-        <label>Store Id</label>
+        <label>Store</label>
           <select class="form-control" name="sid">
+            <option value = ""></option>
             {{#each storeList}}
-            <option value = "{{this.store_id}}">[Store Id: {{this.store_id}}] {{{this.store_name}}}</option>
+            <option value = "{{this.store_id}}">{{{this.store_name}}}</option>
             {{/each}}
           </select>
       </div>
@@ -30,11 +37,11 @@
     <div class="form-row">
       <div class="col">
         <label>Product Id</label>
-        <input type="text" class="form-control" name="pid" required>
+        <input type="number" class="form-control" name="pid" min="1" required>
       </div>
       <div class="col">
         <label>Qty</label>
-        <input type="text" class="form-control" name="qty" required>
+        <input type="number" class="form-control" name="qty" required>
       </div>
     </div>
   </form><br>

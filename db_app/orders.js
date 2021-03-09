@@ -9,6 +9,9 @@ module.exports = function(){
   var deleteQuery = 'DELETE FROM abc_orders WHERE order_id = ?';
 
   var storeQuery = 'SELECT store_id, store_name FROM abc_stores';
+  var customerQuery = 'SELECT * FROM abc_customers';
+  var productQuery = 'SELECT * FROM abc_products';
+  var searchProductQuery = productQuery + ' WHERE product_id = ?';
 
   // READ/ADD queries for Orders and Orders_Products
   var insertOrder = 'INSERT INTO abc_orders (`cid`, `sid`, `order_date`) VALUES (?, ?, ?)';
@@ -20,10 +23,6 @@ module.exports = function(){
   var getOrderDetailsQuery = 'SELECT op.oid, op.pid, p.product_name, op.quantity, op.total_price FROM abc_orders_products AS op \
                             INNER JOIN abc_products as p ON op.pid = p.product_id \
                             WHERE op.oid = ? ORDER BY op.pid';
-
-  var customerQuery = 'SELECT * FROM abc_customers';
-  var productQuery = 'SELECT * FROM abc_products';
-
 
   // READ ORDERS helper function
   function getOrderInputList(results){
@@ -164,29 +163,32 @@ module.exports = function(){
     var context = {'title': 'Add Order', 'jsscripts': ['scripts', 'add_order']};
     context['layout'] = 'noNav.handlebars';
 
-    // get store list
+    // dropdown menu
+    // get stores
     mysql.pool.query(storeQuery, (error, results, fields) => {
       if (error){
         console.log("StoreQuery Error: " + error);
         res.send("StoreQuery Error:" + error);
         return;
       }
-      var storeList = [];
-      for (i = 0; i < results.length; i++){
-        var temp = {};
-        var store = results[i];
-        temp['store_id'] = store.store_id;
-        temp['store_name'] = store.store_name;
-        storeList.push(temp);
-      }
-      context['storeList'] = storeList;
-      res.render('add_order', context);
+      context['storeList'] = results;
+      // get customers
+      mysql.pool.query(customerQuery, (error, results, fields) => {
+        if (error){
+          console.log("StoreQuery Error: " + error);
+          res.send("StoreQuery Error:" + error);
+          return;
+        }
+        context['customerList'] = results;
+        res.render('add_order', context);
+      });
     });
   }
 
   // ADD ORDERS and ORDERS_PRODUCTS
   async function addOrderInsert(req, res){
     var mysql = req.app.get('mysql');
+    var context = {'title': 'Add Order', 'jsscripts': ['scripts', 'add_order']};
 
     var cid = req.body.cid;
     var sid = req.body.sid;

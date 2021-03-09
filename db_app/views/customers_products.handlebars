@@ -1,59 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<p>Customers and Products Page</p>
-<p>Displays the most popular product by each age group (<20, 20-29, 30-39, etc)
-  <br>(M:M Orders and Products, 1:M Customers and Orders)</p>
-
-
-  <h2>Select Age Group</h2>                                      
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Age Group
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Under 20</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">20-29</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">30-39</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">40-49</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">50-59</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">60-69</a></li>
-      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">70+</a></li>
-    </ul>
-  </div>
-
-<br>
-
-
-<!-- read/update/delete data -->
-  <table class="table table-striped table-bordered" id="reportCP">
+<h1>Customers and Products</h1>
+<p>Displays the quantity and the sales total of products sold by a selected age group.<br>
+The <b>most sold product</b> placed on the top of the table below.</p>
+<div class="form">
+  <form action="/customers_products" method="POST">
+    <fieldset>
+      <legend>Select Age Group</legend>
+      <div class="form-row">
+        <div class="col-4">
+          <select class="form-control" name="ageGroup">
+            <option value="0,19">Under 20</option>
+            <option value="20,29">20-29</option>
+            <option value="30,39">30-39</option>
+            <option value="40,49">40-49</option>
+            <option value="50,59">50-59</option>
+            <option value="60,69">60-69</option>
+            <option value="70,120">Over 70</option>
+          </select>
+        </div>
+        <input class="btn btn-secondary btn-sm" type="submit" value="Select">
+      </div>
+    </fieldset>
+  </form>
+</div>
+<h5>Age Group Selected: {{ageGroup}}</h5>
+<!-- read data -->
+  <table class="table table-striped table-bordered">
     <thead>
       <tr>
-        <th>Customer Id</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Product</th>
-        <th>Quantity</th>
+        <th>Product Id</th>
+        <th>Product Name</th>
+        <th>Quantity Sold</th>
+        <th>Sales Total</th>
       </tr>
     </thead>
-
     <tbody>
     {{#each customers}}
       <tr>
-        <td>{{customer_id}}</td>
-        <td>{{first_name}}</td>
-        <td>{{last_name}}</td>
-        <td>{{product_name}}</td>
-        <td>{{Total}}</td>
+        <td>{{product_id}}</td>
+        <td>{{{product_name}}}</td>
+        <td>{{total}}</td>
+        <td>{{total_price}}</td>
       </tr>
     {{/each}}
-  
     </tbody>
   </table>
-

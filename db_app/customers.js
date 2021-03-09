@@ -4,7 +4,7 @@ module.exports = function(){
   var router = express.Router();
 
   // Move Queries into functions
-  var getQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers';
+  var getQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers ORDER BY customer_id DESC';
   var searchQuery = 'SELECT customer_id, first_name, last_name, birthdate FROM abc_customers WHERE last_name LIKE ?';
   var insertQuery = 'INSERT INTO abc_customers (first_name, last_name, birthdate) VALUES (?,?,?)';
   var updateQuery = 'UPDATE abc_customers SET first_name = ?, last_name = ?, birthdate = ? WHERE customer_id = ?';

@@ -8,8 +8,6 @@ var express = require('express');
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var path = require('path');
 var mysql = require('./dbcon.js');
-var bodyParser = require('body-parser');
-
 
 var app = express();
 app.engine('handlebars', handlebars.engine);
@@ -25,12 +23,6 @@ app.listen(app.get('port'), function() {
     `Express started on http://${process.env.HOSTNAME}:${app.get('port')};
      press Ctrl-C to terminate.`);
 });
-
-app.use(bodyParser.urlencoded({extended:true}));
-app.use('/static', express.static('public'));
-app.use('/', express.static('public'));
-
-
 
 app.use('/stores', require('./stores'));
 app.use('/products', require('./products'));

@@ -5,31 +5,22 @@
       <form action="/customers/insert" method="POST">
         <input type="text" name="custFname" placeholder="Firt Name">
         <input type="text" name="custLname" placeholder="Last Name">
-        <input type="text" name="custBirthdate" placeholder="Birthdate YYYY-MM-DD">
+        <input type="date" name="custBirthdate">
       <input class="btn btn-secondary btn-sm" type="submit" value="Submit">
       </form>
   </fieldset>
 </div>
-
-
 
 <!-- Search -->
 <div class="form">
   <fieldset>
     <legend>Search Customer</legend>
     <form method="POST" action = '/customers'>
-      <input type="text" name="custFname" placeholder="First Name">
-      {{!-- <input type="text" name="custLname" placeholder="Last Name">
-      Birthdate:
-      <label for="custBdayFrom">From</label>
-      <input type="date" name="custBdayFrom">
-      <label for="custBdayTo">To</label>
-      <input type="date" name="custBdayTo"> --}}
+      <input type="text" name="custLname" placeholder="Last Name" required>
       <input class="btn btn-secondary btn-sm" type="submit" value="Search">
     </form>
   </fieldset>
 </div>
-
 
 <!-- read/update/delete data -->
 <table class="table table-striped table-bordered" id="customerTable">
@@ -50,12 +41,9 @@
         <td><input form="{{this.customer_id}}" type="text" class="input{{this.customer_id}}" name="custFname" value="{{this.first_name}}" disabled required></td>
         <td><input form="{{this.customer_id}}" type="text" class="input{{this.customer_id}}" name="custLname" value="{{this.last_name}}" disabled required></td>
         <td><input form="{{this.customer_id}}" type="date" class="input{{this.customer_id}}" name="custBirthdate" value="{{this.birthdate}}" disabled required></td>
-
         <td><button form="{{this.customer_id}}" class="btn btn-primary input{{this.customer_id}}" name="update" value="{{this.customer_id}}">Update</button></td>
         <td><button form="{{this.customer_id}}" class="btn btn-primary" name="delete" value="{{this.customer_id}}">Delete</button></td>
       </tr>
     {{/each}}
-
-
-    </tbody>
-  </table>
+  </tbody>
+</table>

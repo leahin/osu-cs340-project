@@ -27,6 +27,7 @@ function getCustomer(res, mysql, context, complete, ageGroup) {
       res.write(JSON.stringify(error));
       res.end();
     }
+    // context ageGroup selector
     if (ageGroup[0] == 0) {
       context.ageGroup = "Under 20";
     } else if (ageGroup[0] == 70) {
@@ -34,7 +35,18 @@ function getCustomer(res, mysql, context, complete, ageGroup) {
     } else {
       context.ageGroup = ageGroup[0] + "-" + ageGroup[1];
     }
-    context.customers = results;
+    // modifying data received
+    let customers = [];
+    for (i = 0; i < results.length; i++) {
+      let temp = {};
+      let data = results[i];
+      temp['product_id'] = data.product_id;
+      temp['product_name'] = data.product_name;
+      temp['total'] = data.total;
+      temp['total_price'] = data.total_price.toFixed(2);
+      customers.push(temp);
+    }
+    context.customers = customers;
     complete();
   });
 }

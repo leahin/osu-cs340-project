@@ -54,7 +54,7 @@ function getCustomer(res, mysql, context, complete, ageGroup) {
 // Read router to show the initial Age Group.
 router.get('/', function (req, res) {
   var callbackCount = 0;
-  var context = {};
+  var context = {'title': 'Customers and Products'};
   var mysql = req.app.get('mysql');
   getCustomer(res, mysql, context, complete, initAgeGroup);
   function complete() {
@@ -68,7 +68,7 @@ router.get('/', function (req, res) {
 // Search Router, show a selected age group.
 router.post('/', function (req, res) {
   var callbackCount = 0;
-  var context = {};
+  var context = {'title': 'Customers and Products'};
   var mysql = req.app.get('mysql');
   let ageGroup = req.body.ageGroup.split(",");
   getCustomer(res, mysql, context, complete, ageGroup);

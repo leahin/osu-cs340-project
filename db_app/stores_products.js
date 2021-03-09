@@ -42,7 +42,7 @@ module.exports = function(router){
   // the main page of stores and products. show product_id = 1
   router.get('/', function (req, res) {
     var callbackCount = 0;
-    var context = {};
+    var context = {'title': 'Stores and Products'};
     var mysql = req.app.get('mysql');
     getStores(res, mysql, context, complete, initProductId);
     getProducts(res, mysql, context, complete);
@@ -57,7 +57,7 @@ module.exports = function(router){
   // stores and products filter.
   router.post('/', function (req, res) {
     var callbackCount = 0;
-    var context = {};
+    var context = {'title': 'Stores and Products'};
     let product_id = req.body.storeProd;
     var mysql = req.app.get('mysql');
     getStores(res, mysql, context, complete, product_id);

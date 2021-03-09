@@ -89,15 +89,16 @@ async function addOrder(event){
   var req = new XMLHttpRequest();
   var orderInput = {}
 
-  // add cid / sid / order_date
+  // add cid, sid, and order_date
   var cid = document.getElementsByName('cid')[0].value;
   var sid = document.getElementsByName('sid')[0].value;
-  // cid & sid validsation.
+  // verify cid
   if (cid === ""){
     alert("Please select a customer.");
     event.preventDefault();
     return;
   }
+  // verify sid
   if (sid === ""){
     alert("Please select a store.");
     event.preventDefault();
@@ -113,12 +114,13 @@ async function addOrder(event){
   var qty = [];
 
   for (i = 0; i < pids.length; i++){
-    // validate pids and qtys
+    // verify pids
     if (pids[i].value.trim() === "" || isNaN(pids[i].value)) {
       alert("Please enter a valid product Id.");
       event.preventDefault();
       return;
     };
+    // verify qtys
     if (qtys[i].value.trim() === "" || isNaN(qtys[i].value)) {
       alert("Please enter the quantity.");
       event.preventDefault();

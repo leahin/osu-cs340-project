@@ -24,6 +24,12 @@ module.exports = function(){
                             INNER JOIN abc_products as p ON op.pid = p.product_id \
                             WHERE op.oid = ? ORDER BY op.pid';
 
+  /*
+    ==============
+    orders page
+    ==============
+  */
+
   // READ ORDERS helper function
   function getOrderInputList(results){
     var context = {'title': 'Orders', 'jsscripts': ['scripts', 'orders']};
@@ -89,6 +95,7 @@ module.exports = function(){
     var userInputs = [];
     var queryPartial = [];
 
+    // dynamic filter handler
     if (orderId.trim() !== "") {
       userInputs.push(orderId);
       queryPartial.push('order_id = ?');
@@ -109,6 +116,7 @@ module.exports = function(){
     } else if (condition == 1){
       searchQuery += queryPartial[0];
     } else {
+        // user entered nothing
         res.redirect('/orders');
         return;
     };
@@ -156,6 +164,12 @@ module.exports = function(){
       res.redirect('/orders');
     });
   }
+
+  /*
+    ==============
+    add_orders page
+    ==============
+  */
 
   // ADD ORDERS - new window view
   function addOrderView(req, res){
@@ -244,6 +258,12 @@ module.exports = function(){
       });
     };
   }
+
+  /*
+    ==============
+    order details page
+    ==============
+  */
 
   // READ ORDERS_PRODUCTS
   function getOrderDetails(req, res){

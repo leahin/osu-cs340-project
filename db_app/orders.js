@@ -64,8 +64,6 @@ module.exports = function(){
     };
 
     context['inputList'] = inputList;
-    JSON.stringify(context);
-
     return context;
   }
 
@@ -112,7 +110,6 @@ module.exports = function(){
     } else if (condition == 1){
       searchQuery += queryPartial[0];
     } else {
-        //res.send("Error: No User Inputs.");
         res.redirect('/orders');
         return;
     };
@@ -259,7 +256,6 @@ module.exports = function(){
         return;
       };
 
-      JSON.stringify(rows);
       var inputList = [];
       for(i = 0; i < rows.length; i++){
         data = rows[i];

@@ -2,7 +2,7 @@ module.exports = function(router){
   var express = require('express');
   var router = express.Router();
 
-  var initProductId = 1;  // product_id initially shown on the page.
+  var initProductId = 1;  // the first product_id to be shown on the page
 
   var reportQuery = "SELECT s.store_id, s.store_name, p.product_id, p.product_name, IFNULL(SUM(op.quantity), 0) as total \
             FROM abc_stores AS s \

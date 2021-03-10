@@ -137,4 +137,5 @@ async function addOrder(event){
   await req.send(JSON.stringify(orderInput))
 
   window.opener.location.reload(false);
+  window.close();
 };

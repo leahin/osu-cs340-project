@@ -110,9 +110,7 @@ CREATE TABLE `abc_orders_products` (
   FOREIGN KEY (`pid`) REFERENCES `abc_products` (`product_id`)
     ON DELETE SET NULL,
   FOREIGN KEY (`oid`) REFERENCES `abc_orders` (`order_id`)
-    ON DELETE CASCADE,
-  CONSTRAINT CHK_quantity CHECK (quantity > 0),
-  CONSTRAINT CHK_total_price CHECK (total_price > 0)
+    ON DELETE CASCADE
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

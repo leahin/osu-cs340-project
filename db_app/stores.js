@@ -127,8 +127,8 @@ module.exports = function(){
   router.get('/', getStores)
   router.post('/', searchStore)
   router.post('/insert', insertStore)
-  router.delete('/', deleteStore)
   router.put('/', updateStore)
+  router.delete('/', deleteStore)
 
   return router;
 }();

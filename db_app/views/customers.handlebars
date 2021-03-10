@@ -3,9 +3,9 @@
   <fieldset>
     <legend>Add Customer</legend>
       <form action="/customers/insert" method="POST">
-        <input type="text" name="custFname" placeholder="Firt Name">
-        <input type="text" name="custLname" placeholder="Last Name">
-        <input type="date" name="custBirthdate">
+        <input type="text" name="custFname" placeholder="Firt Name" required>
+        <input type="text" name="custLname" placeholder="Last Name" required>
+        <input type="date" name="custBirthdate" required>
       <input class="btn btn-secondary btn-sm" type="submit" value="Submit">
       </form>
   </fieldset>

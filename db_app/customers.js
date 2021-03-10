@@ -133,8 +133,8 @@ module.exports = function(){
   router.get('/', getCustomers)
   router.post('/', searchCustomer)
   router.post('/insert', insertCustomer)
-  router.delete('/', deleteCustomer)
   router.put('/', updateCustomer)
+  router.delete('/', deleteCustomer)
 
   return router;
 }();

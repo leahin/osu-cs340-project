@@ -3,10 +3,10 @@
 -- 1. read
 SELECT * FROM `abc_stores`;
 
--- filters
+-- filter by store name
 SELECT * FROM `abc_stores` WHERE store_name LIKE %:storeNameFilterKeyword%;
 
--- 2. add
+-- 2. add new
 INSERT INTO `abc_stores` (store_name, street_address, state, zip_code)
 VALUES (:storeName, :storeStreetAddress, :storeState, :storeZipCode);
 
@@ -24,10 +24,10 @@ DELETE FROM `abc_stores` WHERE store_id = :storeId;
 -- 1. read
 SELECT * FROM `abc_customers`;
 
--- filters
+-- filter by customer's last name
 SELECT customer_id, first_name, last_name, birthdate FROM abc_customers WHERE last_name LIKE %:customerLNameFilterKeyword%;
 
--- 2. add
+-- 2. add new
 INSERT INTO `abc_customers` (first_name, last_name, birthdate)
 VALUES (:customerFName, :customerLName, :customerBday);
 
@@ -44,7 +44,7 @@ DELETE FROM `abc_customer` WHERE customer_id = :custId;
 -- 1. read
 SELECT * FROM `abc_products`;
 
--- filters
+-- filter by product name
 SELECT * FROM `abc_products` WHERE product_name LIKE %:productNameFilterKeyword%;
 
 -- 2. add
@@ -63,14 +63,14 @@ DELETE FROM `abc_products` WHERE product_id=:productId;
 -- [orders]
 -- 1. read
 SELECT * FROM `abc_orders` ORDER BY order_id DESC;
--- filters (order Id, customer id, store id or mixed.)
+-- filter by either at least one of order Id, customer id, or store_id.
 SELECT * FROM `abc_orders` WHERE order_id=:orderId;
 SELECT * FROM `abc_orders` WHERE cid=:custId;
 SELECT * FROM `abc_orders` WHERE sid=:storeId;
 SELECT * FROM `abc_orders` WHERE cid=:custId AND sid=:storeId;
--- WHERE order_id AND ... possible but because there are only 1 order_id, this query is not meaningful.
+-- WHERE order_id AND (store_id or customer_id) is possible but because there are only 1 order_id, this query is not meaningful.
 
--- 2. add
+-- 2. add new
 INSERT INTO `abc_orders` (cid, sid, order_date)
 VALUES (:custId, :storeId, :orderDate);
 
@@ -88,11 +88,14 @@ SELECT * FROM `abc_orders_products` WHERE oid=:olderId;
 -- 1-1. order_details read query
 SELECT op.oid, op.pid, p.product_name, op.quantity, op.total_price FROM `abc_orders_products` AS op
 INNER JOIN `abc_products` as p ON op.pid = p.product_id
-WHERE op.oid = ? ORDER BY op.pid;
+WHERE op.oid = :order_id ORDER BY op.pid;
 
--- 2. add
+-- 2. add new
 INSERT INTO `abc_orders_products` (pid, oid, quantity, total_price)
 VALUES (:productId, :olderId, :quantity, :totalPrice_unit_times_quantity);
+
+-- 2-2. to calculate total_price get the unit price by the query below.
+SELECT product_price FROM abc_products WHERE product_id = :productId;
 
 -- UPDATED: update/delete is not possible withoout a primary key. entires with the same values will be updated/deleted simultaneously.
 
@@ -105,6 +108,7 @@ VALUES (:productId, :olderId, :quantity, :totalPrice_unit_times_quantity);
 
 
 -- Sales (READ)
+-- 1:M relationship of Stores and Orders and M:M relationship of Orders and Products
 SELECT s.store_id, s.store_name, SUM(op.total_price) AS total_sales FROM `abc_orders_products` AS op
 INNER JOIN `abc_orders` AS o ON op.oid = o.order_id
 INNER JOIN `abc_stores` AS s ON o.sid = s.store_id
@@ -112,6 +116,7 @@ GROUP BY s.store_id
 ORDER BY total_sales DESC;
 
 -- Sales filter (start date and end date inclusive)
+-- 1:M of Stores and Orders and M:M of Orders and Products
 SELECT s.store_id, s.store_name, SUM(op.total_price) AS total_sales FROM `abc_orders_products` AS op
 INNER JOIN `abc_orders` AS o ON op.oid = o.order_id
 INNER JOIN `abc_stores` AS s ON o.sid = s.store_id
@@ -120,6 +125,7 @@ GROUP BY s.store_id
 ORDER BY total_sales DESC;
 
 -- Stores & Products Filter
+-- 1:M of Stores and Orders and M:M of Orders and Products
 SELECT s.store_id, s.store_name, p.product_id, p.product_name, IFNULL(SUM(op.quantity), 0) as total
 FROM abc_stores AS s
 INNER JOIN abc_orders AS o ON s.store_id = o.sid
@@ -129,6 +135,7 @@ WHERE product_id = :productId
 GROUP BY s.store_id ORDER BY total DESC;
 
 -- Customers and Products Filter
+-- 1:M of Customers and Orders, 1:M of products and Orders, and M:M of Orders and Products
 /* TIMESTAMPDIFF(YEAR, c.birthdate, CURDATE()) AS age
   Date: 3/9/21
   Copied & modified from

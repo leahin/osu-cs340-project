@@ -1,5 +1,6 @@
 navCurrent("navStores");
 
+// update/delete request
 const storeTable = document.getElementById("storeTable");
 storeTable.onclick = function(event){
   var target = event.target;
@@ -9,6 +10,7 @@ storeTable.onclick = function(event){
   };
 
   if (target.name == 'update'){
+    // first make undisabled store inputs
     var inputElements = document.getElementsByClassName("input" + target.value);
     var nameInput = inputElements[0];
     var addressInput = inputElements[1];
@@ -35,15 +37,12 @@ storeTable.onclick = function(event){
       inputs['state'] = target.form.state.value;
       inputs['zip_code'] = target.form.zipCode.value;
 
-
-
-
+      // request update a stores
       requestPut(event, inputs);
       window.location.reload();
     });
   };
 }
-
 
 function requestDelete(event, id){
   var req = new XMLHttpRequest();
@@ -51,7 +50,6 @@ function requestDelete(event, id){
   req.setRequestHeader('Content-Type', 'application/json')
   req.send(JSON.stringify({id: id}));
 }
-
 
 function requestPut(event, inputs){
   var req = new XMLHttpRequest();

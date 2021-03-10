@@ -2,10 +2,10 @@
   <fieldset>
     <legend>Add Store</legend>
     <form method="POST" action="/stores/insert">
-      <input type="text" name="storeName" placeholder="Store Name">
-      <input type="text" name="streetAddress" placeholder="Street Address">
-      <input type="text" name="state" placeholder="State">
-      <input type="text" name="zipCode" placeholder="Zip Code">
+      <input type="text" name="storeName" placeholder="Store Name" required>
+      <input type="text" name="streetAddress" placeholder="Street Address" required>
+      <input type="text" name="state" placeholder="State" required>
+      <input type="text" name="zipCode" placeholder="Zip Code" required>
       <input class="btn btn-secondary btn-sm" type="submit" value="Submit">
      </form>
   </fieldset>

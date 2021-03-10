@@ -2,7 +2,7 @@ module.exports = function(){
   var express = require('express');
   var router = express.Router();
 
-  var getQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores';
+  var getQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores ORDER BY store_id DESC';
   var searchQuery = 'SELECT store_id, store_name, street_address, state, zip_code FROM abc_stores WHERE store_name LIKE ?';
   var insertQuery = 'INSERT INTO abc_stores (store_name, street_address, state, zip_code) VALUES (?,?,?,?)';
   var updateQuery = 'UPDATE abc_stores SET store_name = ?, street_address = ?, state = ?, zip_code = ? WHERE store_id = ?';
